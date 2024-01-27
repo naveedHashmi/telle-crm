@@ -35,3 +35,4 @@
 
 /node_modules
 /config/master.key
+.byebug_history

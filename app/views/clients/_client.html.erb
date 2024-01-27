@@ -1,0 +1,9 @@
+<tr id="<%= dom_id client %>">
+  <th scope="row"><%= client.user.name %></th>
+  <td><%= client.amount_owed %></td>
+  <td><%= client.phone %></td>
+  <td><%= client.address %></td>
+  <td><%= client.user.email %></td>
+  <td>Owner</td>
+  <td><%= link_to "View", client, class: 'btn btn-primary' %></td>
+</tr>

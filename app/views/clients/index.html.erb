@@ -1,0 +1,29 @@
+<p style="color: green"><%= notice %></p>
+
+<div class='d-flex justify-content-between align-items-center'>
+  <h1>Clients</h1>
+  <%= link_to "New client", new_client_path, class: 'btn btn-primary' %>
+</div>
+
+<div id="clients">
+
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Amount Owed</th>
+          <th scope="col">Phone #</th>
+          <th scope="col">Address</th>
+          <th scope="col">Email</th>
+          <th scope="col">Owner or Heir</th>
+          <th scope="col">View Profile</th>
+        </tr>
+      </thead>
+      <tbody>
+      <% @clients.each do |client| %>
+        <%= render client %>
+        <% end %>
+      </tbody>
+    </table>
+
+</div>
