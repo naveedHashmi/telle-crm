@@ -1,0 +1,62 @@
+<%= form_with(model: lead, class: "mt-5") do |form| %>
+  <% if lead.errors.any? %>
+    <div class="alert alert-danger">
+      <h2><%= pluralize(lead.errors.count, "error") %> prohibited this lead from being saved:</h2>
+
+      <ul>
+        <% lead.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :name, class: "form-label" %>
+    <%= form.text_field :name, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :status, class: "form-label" %>
+    <%= form.number_field :status, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :amount_owed, class: "form-label" %>
+    <%= form.text_field :amount_owed, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :property_sold, class: "form-label" %>
+    <%= form.text_field :property_sold, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :country, class: "form-label" %>
+    <%= form.text_field :country, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :date_sold, class: "form-label" %>
+    <%= form.date_field :date_sold, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :mortgage_company, class: "form-label" %>
+    <%= form.text_field :mortgage_company, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :initial_bit_amount, class: "form-label" %>
+    <%= form.text_field :initial_bit_amount, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :sold_amount, class: "form-label" %>
+    <%= form.text_field :sold_amount, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.submit "Save", class: "btn btn-primary" %>
+  </div>
+<% end %>

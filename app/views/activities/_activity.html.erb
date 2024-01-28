@@ -1,0 +1,6 @@
+<tr id="<%= dom_id activity %>">
+  <td scope="row"><%= activity.date.strftime('%A, %b %e, %Y') %></td>
+  <td><%= activity.to_do %></td>
+  <td><%= activity.client.user.name %></td>
+  <td><%= activity.priority %></td>
+</tr>
