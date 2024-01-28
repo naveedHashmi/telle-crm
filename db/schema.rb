@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -10,51 +12,51 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_28_132000) do
+ActiveRecord::Schema[7.0].define(version: 20_240_128_132_000) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+  enable_extension 'plpgsql'
 
-  create_table "activities", force: :cascade do |t|
-    t.date "date"
-    t.string "to_do"
-    t.bigint "client_id", null: false
-    t.integer "priority"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["client_id"], name: "index_activities_on_client_id"
+  create_table 'activities', force: :cascade do |t|
+    t.date 'date'
+    t.string 'to_do'
+    t.bigint 'client_id', null: false
+    t.integer 'priority'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['client_id'], name: 'index_activities_on_client_id'
   end
 
-  create_table "clients", force: :cascade do |t|
-    t.string "phone", default: "", null: false
-    t.decimal "amount_owed", default: "0.0", null: false
-    t.string "address", default: "", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "claim_no", default: "", null: false
+  create_table 'clients', force: :cascade do |t|
+    t.string 'phone', default: '', null: false
+    t.decimal 'amount_owed', default: '0.0', null: false
+    t.string 'address', default: '', null: false
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.string 'claim_no', default: '', null: false
   end
 
-  create_table "leads", force: :cascade do |t|
-    t.integer "status"
-    t.decimal "amount_owed"
-    t.string "property_sold"
-    t.string "country"
-    t.date "date_sold"
-    t.string "mortgage_company"
-    t.decimal "initial_bit_amount"
-    t.decimal "sold_amount"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table 'leads', force: :cascade do |t|
+    t.integer 'status'
+    t.decimal 'amount_owed'
+    t.string 'property_sold'
+    t.string 'country'
+    t.date 'date_sold'
+    t.string 'mortgage_company'
+    t.decimal 'initial_bit_amount'
+    t.decimal 'sold_amount'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
   end
 
-  create_table "users", force: :cascade do |t|
-    t.string "name", default: "", null: false
-    t.string "email", default: "", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "userable_type", null: false
-    t.bigint "userable_id", null: false
-    t.index ["userable_type", "userable_id"], name: "index_users_on_userable"
+  create_table 'users', force: :cascade do |t|
+    t.string 'name', default: '', null: false
+    t.string 'email', default: '', null: false
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.string 'userable_type', null: false
+    t.bigint 'userable_id', null: false
+    t.index %w[userable_type userable_id], name: 'index_users_on_userable'
   end
 
-  add_foreign_key "activities", "clients"
+  add_foreign_key 'activities', 'clients'
 end

@@ -6,7 +6,7 @@
 </div>
 
 <div class='row'>
-<div id="clients" class='col-7'>
+<div id="activities" class='col-7'>
     <table class="table table-hover">
       <thead>
         <tr>
@@ -26,7 +26,9 @@
 
 <div class='col-5'>
 <%= month_calendar(events: @activities, attribute: :date) do |date, activities| %>
-  <%= activities.count %>
+  <%= date.day %>
+  <br><br>
+  <span class="btn btn-success"><%= activities.count %></span>
 <% end %>
 </div>
 
