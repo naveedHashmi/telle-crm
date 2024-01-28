@@ -1,12 +1,10 @@
 <p style="color: green"><%= notice %></p>
-
 <div class='d-flex justify-content-between align-items-center'>
   <h1>Activities</h1>
   <%= link_to "New Activity", new_activity_path, class: 'btn btn-primary' %>
 </div>
-
 <div class='row'>
-<div id="activities" class='col-7'>
+  <div id="activities" class='col-7'>
     <table class="table table-hover">
       <thead>
         <tr>
@@ -17,19 +15,18 @@
         </tr>
       </thead>
       <tbody>
-      <% @activities.each do |activity| %>
-        <%= render activity %>
+        <% @activities.each do |activity| %>
+          <%= render activity %>
         <% end %>
       </tbody>
     </table>
-</div>
-
-<div class='col-5'>
-<%= month_calendar(events: @activities, attribute: :date) do |date, activities| %>
-  <%= date.day %>
-  <br><br>
-  <span class="btn btn-success"><%= activities.count %></span>
-<% end %>
-</div>
-
+  </div>
+  <div class='col-5'>
+    <%= month_calendar(events: @activities, attribute: :date) do |date, activities| %>
+      <%= date.day %>
+      <br>
+      <br>
+      <span class="btn btn-success"><%= activities.count %></span>
+    <% end %>
+  </div>
 </div>
