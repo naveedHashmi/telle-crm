@@ -14,6 +14,7 @@ class ClientsController < ApplicationController
   # GET /clients/new
   def new
     @client = Client.new
+    @client.user = User.new
   end
 
   # GET /clients/1/edit
@@ -38,6 +39,7 @@ class ClientsController < ApplicationController
   def update
     respond_to do |format|
       if @client.update(client_params)
+        client.user.update(user_params)
         format.html { redirect_to client_url(@client), notice: 'Client was successfully updated.' }
         format.json { render :show, status: :ok, location: @client }
       else
@@ -66,7 +68,7 @@ class ClientsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def client_params
-    params.require(:client).permit(:phone, :amount_owed, :address)
+    params.require(:client).permit(:phone, :amount_owed, :address, :claim_no)
   end
 
   def user_params
