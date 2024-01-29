@@ -23,7 +23,7 @@ default: &default
 
 development:
   <<: *default
-  database: telle_crm_development
+  database: <%= ENV['DATABASE_URL'] %>
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
@@ -81,6 +81,6 @@ test:
 #
 production:
   <<: *default
-  database: telle_crm_production
+  database: <%= ENV['DATABASE_URL'] %>
   username: telle_crm
   password: <%= ENV["TELLE_CRM_DATABASE_PASSWORD"] %>
