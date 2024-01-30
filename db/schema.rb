@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_29_173830) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_30_050119) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -34,6 +34,12 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_29_173830) do
     t.string "claim_no", default: "", null: false
   end
 
+  create_table "labels", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "leads", force: :cascade do |t|
     t.integer "status"
     t.decimal "amount_owed"
@@ -46,7 +52,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_29_173830) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "client_id"
+    t.bigint "label_id", null: false
     t.index ["client_id"], name: "index_leads_on_client_id"
+    t.index ["label_id"], name: "index_leads_on_label_id"
   end
 
   create_table "notes", force: :cascade do |t|
@@ -71,5 +79,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_29_173830) do
   end
 
   add_foreign_key "leads", "clients"
+  add_foreign_key "leads", "labels"
   add_foreign_key "notes", "users", column: "author_id"
 end

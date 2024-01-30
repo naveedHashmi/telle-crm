@@ -15,7 +15,7 @@
   </div>
   <div class="mb-3">
     <%= form.label :status, class: "form-label" %>
-    <%= form.number_field :status, class: "form-control" %>
+    <%= form.select :status, options_for_select(['Alive', 'Deceased', 'Unknown']), class: "form-control" %>
   </div>
   <div class="mb-3">
     <%= form.label :amount_owed, class: "form-label" %>
@@ -44,6 +44,10 @@
   <div class="mb-3">
     <%= form.label :sold_amount, class: "form-label" %>
     <%= form.text_field :sold_amount, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :list_name, class: "form-label" %>
+    <%= form.select :label_id, options_for_select(Label.pluck(:name, :id)), class: "form-control" %>
   </div>
   <div class="mb-3">
     <%= form.submit "Save", class: "btn btn-primary" %>

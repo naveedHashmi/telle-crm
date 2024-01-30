@@ -1,0 +1,22 @@
+<%= form_with(model: label, class: "needs-validation", novalidate: true) do |form| %>
+  <% if label.errors.any? %>
+    <div class="alert alert-danger">
+      <h2><%= pluralize(label.errors.count, "error") %> prohibited this label from being saved:</h2>
+      <ul>
+        <% label.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="mb-3">
+    <%= form.label :name, class: "form-label" %>
+    <%= form.text_field :name, class: "form-control", required: true %>
+    <div class="invalid-feedback">
+      Please provide a valid name.
+    </div>
+  </div>
+  <div class="mb-3">
+    <%= form.submit "Save", class: "btn btn-primary" %>
+  </div>
+<% end %>

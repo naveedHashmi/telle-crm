@@ -37,18 +37,15 @@
     <div class="dropdown">
       <input type="text" placeholder="Search label.........      v" class="search-box">
       <div class="dropdown-content" id="myDropdown">
-        <option >
-          <p>Diceases</p>
-          <hr>
+        <% labels = Label.all %>
+        <option value="<%= labels.ids %>">
+          <p>All</p>
         </option>
-        <option >
-          <p>Alive</p>
-          <hr>
-        </option>
-        <option >
-          <p>Unknow</p>
-          <hr>
-        </option>
+        <% labels.each do |label| %>
+          <option value="<%= label.id %>">
+            <p><%= label.name %></p>
+          </option>
+        <% end %>
         <!-- Add more options as needed -->
       </div>
     </div>
@@ -56,31 +53,12 @@
   <!-- Add more options as needed -->
   <div class='col-4 d-flex justify-content-between align-items-center'>
     <%= link_to "Import List", new_lead_path, class: 'btn btn-primary' %>
-    <%= link_to "Create List", new_lead_path, class: 'btn btn-primary' %>
+    <%= link_to "Create List", new_label_path, class: 'btn btn-primary' %>
     <%= link_to "New Lead", new_lead_path, class: 'btn btn-primary' %>
   </div>
 </div>
-<div id="clients">
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <th scope="col">Name</th>
-        <th scope="col">Status</th>
-        <th scope="col">Amount Owed</th>
-        <th scope="col">Property Sold</th>
-        <th scope="col">Country</th>
-        <th scope="col">Date Sold</th>
-        <th scope="col">Mortgage Company</th>
-        <th scope="col">Initial Bid Amount</th>
-        <th scope="col">Sold Amount</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @leads.each do |lead| %>
-        <%= render lead %>
-      <% end %>
-    </tbody>
-  </table>
+<div id="leads">
+  <%= render 'leads', leads: @leads %>
 </div>
 <script>
   // JavaScript to handle the dropdown behavior
@@ -113,6 +91,15 @@
 
     $('.dropdown option').on('click', function (e) {
       $('.search-box').val(e.target.text)
+
+      $.ajax({
+          type: "GET",
+          url: `${window.location.href}.js`,
+          data: { label_id: e.target.value },
+          error: function (error) {
+            console.error("Error:", error);
+          }
+        });
     })
   });
 </script>

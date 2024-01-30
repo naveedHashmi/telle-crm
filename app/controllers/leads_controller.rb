@@ -6,6 +6,8 @@ class LeadsController < ApplicationController
   # GET /leads or /leads.json
   def index
     @leads = Lead.all
+
+    @leads = @leads.where(label_id: [JSON.parse(params[:label_id])].flatten) if params[:label_id].present?
   end
 
   # GET /leads/1 or /leads/1.json
@@ -21,15 +23,15 @@ class LeadsController < ApplicationController
 
   # POST /leads or /leads.json
   def create
-    @lead = Lead.new(lead_params)
+    ActiveRecord::Base.transaction do
+      @lead = Lead.new(lead_params)
 
-    respond_to do |format|
       if @lead.save
-        format.html { redirect_to lead_url(@lead), notice: 'Lead was successfully created.' }
-        format.json { render :show, status: :created, location: @lead }
+        @user = User.create!(user_params.merge(userable: @lead))
+
+        redirect_to leads_path, notice: 'Client successfully created.'
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @lead.errors, status: :unprocessable_entity }
+        render :new
       end
     end
   end
@@ -67,6 +69,10 @@ class LeadsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def lead_params
     params.require(:lead).permit(:status, :amount_owed, :property_sold, :country, :date_sold, :mortgage_company,
-                                 :initial_bit_amount, :sold_amount)
+                                 :initial_bit_amount, :sold_amount, :label_id)
+  end
+
+  def user_params
+    params.require(:lead).permit(:name, :email)
   end
 end

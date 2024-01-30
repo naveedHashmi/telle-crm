@@ -23,15 +23,16 @@ class ClientsController < ApplicationController
   # POST /clients or /clients.json
 
   def create
-    @client = Client.new(client_params)
+    ActiveRecord::Base.transaction do
+      @client = Client.new(client_params)
 
-    if @client.save
-      # Create a corresponding User for the Client
-      @user = User.create(user_params.merge(userable: @client))
+      if @client.save
+        @user = User.create!(user_params.merge(userable: @client))
 
-      redirect_to clients_path, notice: 'Client was successfully created.'
-    else
-      render :new
+        redirect_to clients_path, notice: 'Client successfully created.'
+      else
+        render :new
+      end
     end
   end
 
