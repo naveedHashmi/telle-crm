@@ -1,7 +1,7 @@
 <section class="section profile">
   <h1>Client Profile</h1>
   <div class='row'>
-    <div class="col-xl-8">
+    <div class="col-xl-9">
       <div class="card">
         <div class="card-body pt-3">
           <!-- Bordered Tabs -->
@@ -46,7 +46,7 @@
               <div class='d-flex justify-content-center align-items-center'>
                 <%= link_to "Edit this client", edit_client_path(@client), class: 'btn btn-success' %> |
                 <%= link_to "Back to clients", clients_path, class: 'btn btn-info' %> |
-                <%= button_to "Destroy this client", @client, method: :delete, class: 'btn btn-danger' %>
+                <%= button_to "Delete client", @client, method: :delete, class: 'btn btn-danger' %>
               </div>
             </div>
             <div class="tab-pane fade pt-3" id="client-notes">
@@ -60,9 +60,10 @@
                     </button>
                     <div id="add-note" class="accordion-collapse collapse">
                       <div class="accordion-body">
-                        <%= form_with(model: Note.new, url: notes_path(format: :js), method: 'post', id: 'notes-form') do |form| %>
+                        <%= form_with(model: Note.new, url: notes_path(format: :js), method: 'post', id: 'client-notes-form') do |form| %>
                           <%= form.hidden_field :author_id, value: User.first.id %>
-                          <%= form.hidden_field :client_id, value: @client.id %>
+                          <%= form.hidden_field :noteable_type, value: 'Client' %>
+                          <%= form.hidden_field :noteable_id, value: @client.id %>
                           <div class="mb-3">
                             <label for="inputPassword" class="col-sm-2 col-form-label">Note: </label>
                             <%= form.text_area :description, class: "form-control", style:"height: 100px" %>
@@ -74,8 +75,10 @@
                       </div>
                     </div>
                   </div>
-                  <div id='notes-list'>
-                    <%= render 'notes', notes: @client.notes %>
+                  <div class="scrollable-div" style="max-height: 65vh; overflow-y: auto; border: 1px solid #ddd; padding: 10px;">
+                    <div id='notes-list'>
+                      <%= render 'notes', notes: @client.notes.order(created_at: :desc) %>
+                    </div>
                   </div>
                 </div>
                 <!-- End sidebar recent posts-->
@@ -86,7 +89,7 @@
                 <h1><%= @client.user.name %> Activities</h1>
                 <%= link_to "New Activity", new_activity_path, class: 'btn btn-primary' %>
               </div>
-              <div class='row'>
+              <div class='row scrollable-div' style="max-height: 65vh; overflow-y: auto; border: 1px solid #ddd; padding: 10px;">
                 <div id="activities" class='col-7'>
                   <table class="table table-hover">
                     <thead>
@@ -143,10 +146,9 @@
         </div>
       </div>
     </div>
-    <div class="col-xl-4">
+    <div class="col-xl-3">
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title">Integrations</h5>
           <!-- Default List group -->
           <ul class="list-group">
             <a href="#">
@@ -171,3 +173,20 @@
     </div>
   </div>
 </section>
+<script>
+  $(document).ready(function() {
+    $('body').on('submit', '#client-notes-form', function(e){
+      e.preventDefault();
+      var formData = $(this).serialize();
+
+      $.ajax({
+        type: 'POST',
+        url: $(this).attr('action'),
+        data: formData,
+        error: function(error) {
+          console.error('Error submitting form:', error);
+        }
+      });
+    })
+  })
+</script>

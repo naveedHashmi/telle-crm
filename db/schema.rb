@@ -10,18 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_29_023654) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_29_173830) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "activities", force: :cascade do |t|
     t.date "date"
     t.string "to_do"
-    t.bigint "client_id", null: false
     t.integer "priority"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["client_id"], name: "index_activities_on_client_id"
+    t.string "assignee_type", null: false
+    t.bigint "assignee_id", null: false
+    t.index ["assignee_type", "assignee_id"], name: "index_activities_on_assignee"
   end
 
   create_table "clients", force: :cascade do |t|
@@ -50,12 +51,13 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_29_023654) do
 
   create_table "notes", force: :cascade do |t|
     t.bigint "author_id", null: false
-    t.bigint "client_id", null: false
     t.string "description", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "noteable_type", null: false
+    t.bigint "noteable_id", null: false
     t.index ["author_id"], name: "index_notes_on_author_id"
-    t.index ["client_id"], name: "index_notes_on_client_id"
+    t.index ["noteable_type", "noteable_id"], name: "index_notes_on_noteable"
   end
 
   create_table "users", force: :cascade do |t|
@@ -68,8 +70,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_29_023654) do
     t.index ["userable_type", "userable_id"], name: "index_users_on_userable"
   end
 
-  add_foreign_key "activities", "clients"
   add_foreign_key "leads", "clients"
-  add_foreign_key "notes", "clients"
   add_foreign_key "notes", "users", column: "author_id"
 end

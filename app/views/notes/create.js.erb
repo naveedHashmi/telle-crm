@@ -1,1 +1,1 @@
-$('#notes-list').html("<%= escape_javascript render(partial: 'clients/notes', locals: {notes: @notes})%>")
+$('body').find('#notes-list').html("<%= escape_javascript render(partial: 'clients/notes', locals: {notes: @notes})%>")

@@ -1,19 +1,59 @@
-<p style="color: green"><%= notice %></p>
+<style>
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    z-index: 1;
+    width: 100%;
+  }
+
+  .dropdown-content a {
+    display: block;
+    margin-left: 8px;
+    text-decoration: none;
+    color: #333;
+  }
+
+  .dropdown-content a:hover {
+    background-color: #ddd;
+  }
+
+  .search-box {
+    box-sizing: border-box;
+    margin-left: 8px;
+    margin-bottom: 8px;
+  }
+</style>
 <div class='d-flex justify-content-between align-items-center'>
   <div class='col-2 d-flex justify-content-between align-items-center'>
     <h1>Leads</h1>
-    <select class="selectpicker" data-live-search="true">
-      <option data-tokens="ketchup mustard">Hot Dog, Fries and a Soda</option>
-      <option data-tokens="mustard">Burger, Shake and a Smile</option>
-      <option data-tokens="frosting">Sugar, Spice and all things nice</option>
-    </select>
-    <select id="status" class="form-control">
-      <option value="" selected disabled>List</option>
-      <% Lead.statuses.keys.each do |status| %>
-        <option value="<%= status %>"><%= status.humanize %></option>
-      <% end %>
-    </select>
+    <div class="dropdown">
+      <input type="text" placeholder="Search label.........      v" class="search-box">
+      <div class="dropdown-content" id="myDropdown">
+        <option >
+          <p>Diceases</p>
+          <hr>
+        </option>
+        <option >
+          <p>Alive</p>
+          <hr>
+        </option>
+        <option >
+          <p>Unknow</p>
+          <hr>
+        </option>
+        <!-- Add more options as needed -->
+      </div>
+    </div>
   </div>
+  <!-- Add more options as needed -->
   <div class='col-4 d-flex justify-content-between align-items-center'>
     <%= link_to "Import List", new_lead_path, class: 'btn btn-primary' %>
     <%= link_to "Create List", new_lead_path, class: 'btn btn-primary' %>
@@ -43,8 +83,36 @@
   </table>
 </div>
 <script>
-  $(function () {
-    debugger
-    $('select').selectpicker();
+  // JavaScript to handle the dropdown behavior
+  document.addEventListener("DOMContentLoaded", function () {
+    const searchBox = document.querySelector(".search-box");
+    const dropdownContent = document.querySelector(".dropdown-content");
+    searchBox.addEventListener("input", function () {
+      const filter = searchBox.value.toUpperCase();
+      const options = dropdownContent.getElementsByTagName("option");
+
+      for (let i = 0; i < options.length; i++) {
+        const txtValue = options[i].textContent || options[i].innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          options[i].style.display = "";
+        } else {
+          options[i].style.display = "none";
+        }
+      }
+    });
+
+    searchBox.addEventListener("focus", function () {
+      dropdownContent.style.display = "block";
+    });
+
+    searchBox.addEventListener("blur", function () {
+      setTimeout(function () {
+        dropdownContent.style.display = "none";
+      }, 200);
+    });
+
+    $('.dropdown option').on('click', function (e) {
+      $('.search-box').val(e.target.text)
+    })
   });
 </script>

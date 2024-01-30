@@ -3,6 +3,6 @@
 class Client < ApplicationRecord
   has_one :user, as: :userable
 
-  has_many :activities
-  has_many :notes
+  has_many :activities, as: :assignee, dependent: :destroy
+  has_many :notes, as: :noteable, dependent: :destroy
 end

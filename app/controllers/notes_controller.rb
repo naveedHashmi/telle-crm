@@ -2,7 +2,7 @@
 
 class NotesController < ApplicationController
   before_action :set_note, only: %i[show edit update destroy]
-  before_action :set_client, only: :create
+  before_action :set_assignee, only: :create
 
   # GET /notes or /notes.json
   def index
@@ -23,14 +23,10 @@ class NotesController < ApplicationController
   # POST /notes or /notes.json
   def create
     @note = Note.new(note_params)
-    @note.save
+    @note.save!
+    @notes = @assignee.notes.order(created_at: :desc)
 
-    @notes = @client.notes
-
-    # byebug
-    respond_to do |format|
-      format.js
-    end
+    respond_to(&:js)
   end
 
   # PATCH/PUT /notes/1 or /notes/1.json
@@ -65,10 +61,10 @@ class NotesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def note_params
-    params.require(:note).permit(:author_id, :client_id, :description)
+    params.require(:note).permit(:author_id, :noteable_id, :noteable_type, :description)
   end
 
-  def set_client
-    @client ||= Client.find(note_params[:client_id])
+  def set_assignee
+    @assignee ||= note_params[:noteable_type].constantize.find_by(id: note_params[:noteable_id])
   end
 end
