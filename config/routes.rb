@@ -4,11 +4,14 @@ Rails.application.routes.draw do
   resources :labels
   resources :notes
   resources :activities
-  resources :leads
+  resources :leads do
+    collection do
+      get :upload_csv
+      post :process_csv
+      post :mappings
+    end
+  end
   resources :clients
   resources :users
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Defines the root path route ("/")
   root 'clients#index'
 end

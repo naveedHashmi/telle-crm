@@ -3,6 +3,7 @@
 class LeadsController < ApplicationController
   before_action :set_lead, only: %i[show edit update destroy]
 
+  include LeadsHelper
   # GET /leads or /leads.json
   def index
     @leads = Lead.all
@@ -57,6 +58,50 @@ class LeadsController < ApplicationController
       format.html { redirect_to leads_url, notice: 'Lead was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def upload_csv; end
+
+  def mappings
+    @file = params[:file]
+    @headers = CSV.open(@file.path, 'r', &:readline)
+  end
+
+  def process_csv
+    file_path = params[:file].path
+    filtered_params = params.select { |_key, value| dropdwon_mappings.keys.include?(value) }.permit!.to_h.invert
+
+    ActiveRecord::Base.transaction do
+      CSV.foreach(file_path, headers: true) do |row|
+        status = row[filtered_params['status']]
+        amount_owed = row[filtered_params['amount_owed']].gsub(/[^\d]/, '').to_i
+        property_sold = row[filtered_params['property_sold']]
+        county = row[filtered_params['county']]
+        date_sold = begin
+          Date.parse(row[filtered_params['date_sold']])
+        rescue StandardError
+          nil
+        end
+        mortgage_company = row[filtered_params['mortgage_company']]
+        initial_bid_amount = row[filtered_params['initial_bid_amount']].gsub(/[^\d]/, '').to_i
+        sold_amount = row[filtered_params['sold_amount']].gsub(/[^\d]/, '').to_i
+        label = row[filtered_params['label']]
+        name = row[filtered_params['name']]
+
+        model_label = Label.find_by(name: label)
+        model_lead = User.where(userable_type: 'Lead').find_by(name:)
+        model_label ||= Label.create(name: label)
+
+        next if model_lead.present?
+
+        lead = Lead.find_or_initialize_by(status:, amount_owed:,
+                                          initial_bid_amount:, property_sold:, county:, date_sold:, mortgage_company:,
+                                          sold_amount:, label: model_label)
+        User.create!(name:, userable: lead) if lead.save
+      end
+    end
+
+    redirect_to leads_url
   end
 
   private

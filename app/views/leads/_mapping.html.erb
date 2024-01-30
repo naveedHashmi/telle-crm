@@ -1,0 +1,13 @@
+<% headers.each do |header|%>
+  <div class="mt-20">
+    <div class="row mt-3">
+      <div class="col-2">
+        <label class="label"><%= header %></label>:
+      </div>
+      <div class="col-6">
+        <%= select_tag header, options_for_select(mapping_options), class: "form-control" %>
+      </div>
+    </div>
+  </div>
+<% end %>
+<input type="submit" name="commit" value="Process file" data-disable-with="Upload">
