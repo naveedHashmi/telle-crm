@@ -18,8 +18,9 @@
     <%= form.text_field :to_do, class: "form-control" %>
   </div>
   <div class="mb-3">
-    <%= form.label :client_id, class: "form-label" %>
-    <%= form.select :client_id, options_for_select(Client.joins(:user).pluck('users.name, clients.id')), class: "form-control" %>
+    <%= form.label :Assignee, class: "form-label" %>
+    <%= form.select :assignee_type, options_for_select(['Client', 'Lead']), class: "form-control" %>
+    <%= form.select :assignee_id, options_for_select(Client.joins(:user).pluck('users.name', :id)), class: "form-control" %>
   </div>
   <div class="mb-3">
     <%= form.label :priority, class: "form-label" %>
@@ -29,3 +30,17 @@
     <%= form.submit "Save", class: "btn btn-primary" %>
   </div>
 <% end %>
+<script>
+  $(document).ready(function() {
+    data = {'Client': <%= raw @clients %>,
+    'Lead': <%= raw @leads %>}
+    $('body').on('change', '#activity_assignee_type', function(e){
+
+      var dropdown = $("#activity_assignee_id");
+      dropdown.html('')
+      data[e.target.value].map(function(item) {
+        dropdown.append(`<option value=${item[1]}> ${item[0]}</option>`);
+      })
+    })
+  })
+</script>

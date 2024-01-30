@@ -15,6 +15,9 @@
             <li class="nav-item">
               <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings">Activities</button>
             </li>
+            <li class="nav-item">
+              <button class="nav-link" data-bs-toggle="tab" data-bs-target="#client-calendar">Calendar</button>
+            </li>
           </ul>
           <div class="tab-content pt-2">
             <div class="tab-pane fade show active profile-overview" id="profile-overview">
@@ -87,59 +90,67 @@
             <div class="tab-pane fade pt-3" id="profile-settings">
               <div class='d-flex justify-content-between align-items-center'>
                 <h1><%= @client.user.name %> Activities</h1>
-                <%= link_to "New Activity", new_activity_path, class: 'btn btn-primary' %>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalLong">
+                  New Activity
+                </button>
               </div>
-              <div class='row scrollable-div' style="max-height: 65vh; overflow-y: auto; border: 1px solid #ddd; padding: 10px;">
-                <div id="activities" class='col-7'>
-                  <table class="table table-hover">
-                    <thead>
-                      <tr>
-                        <th scope="col">Date</th>
-                        <th scope="col">What to do</th>
-                        <th scope="col">Client</th>
-                        <th scope="col">Priority</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <% @client.activities.each do |activity| %>
-                        <%= render activity %>
-                      <% end %>
-                    </tbody>
-                  </table>
-                </div>
-                <div class='col-5'>
-                  <%= month_calendar(events: @client.activities, attribute: :date) do |date, activities| %>
-                    <%= activities.count %>
-                  <% end %>
+              <div class='row scrollable-div' style="max-height: 67vh; overflow-y: auto; border: 1px solid #ddd; padding: 10px;">
+                <div id="activities-list" class='col-12'>
+                  <%= render partial: 'activities/activities_list', locals: {activities: @client.activities} %>
                 </div>
               </div>
             </div>
-            <div class="tab-pane fade pt-3" id="profile-change-password">
-              <!-- Change Password Form -->
-              <form>
-                <div class="row mb-3">
-                  <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
-                  <div class="col-md-8 col-lg-9">
-                    <input name="password" type="password" class="form-control" id="currentPassword">
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">New Activity</h5>
+                  </div>
+                  <div class="modal-body">
+                    <%= form_with(model: Activity.new, url: activities_path(format: :js), method: 'post', id: 'client-activity-form') do |form| %>
+                      <div class="mb-3">
+                        <%= form.label :date, class: "form-label" %>
+                        <%= form.date_field :date, class: "form-control" %>
+                      </div>
+                      <div class="mb-3">
+                        <%= form.label :to_do, class: "form-label" %>
+                        <%= form.text_field :to_do, class: "form-control" %>
+                      </div>
+                      <div class="mb-3">
+                        <%= form.hidden_field :assignee_type, value: 'Client' %>
+                        <%= form.hidden_field :assignee_id, value: @client.id %>
+                        <div class="row">
+                          <div class="col-lg-3 col-md-4 label ">Client</div>
+                          <div class="col-lg-9 col-md-8"><%= @client.user.name %></div>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <%= form.label :priority, class: "form-label" %>
+                        <%= form.select :priority, options_for_select([ 'Regular','High', 'Urgent']), class: "form-control" %>
+                      </div>
+                      <div class="mb-3">
+                        <%= form.submit "Save", class: "btn btn-primary" %>
+                      </div>
+                    <% end %>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                   </div>
                 </div>
-                <div class="row mb-3">
-                  <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
-                  <div class="col-md-8 col-lg-9">
-                    <input name="newpassword" type="password" class="form-control" id="newPassword">
-                  </div>
+              </div>
+            </div>
+            <div class="tab-pane fade pt-3" id="client-calendar">
+              <div class='row scrollable-div' style="max-height: 67vh; overflow-y: auto; border: 1px solid #ddd; padding: 10px;">
+                <div class='col-12'>
+                  <%= month_calendar(events: @client.activities, attribute: :date) do |date, activities| %>
+                    <%= date.day %>
+                    <br>
+                    <br>
+                    <span class="btn btn-success"><%= activities.count %></span>
+                  <% end %>
                 </div>
-                <div class="row mb-3">
-                  <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
-                  <div class="col-md-8 col-lg-9">
-                    <input name="renewpassword" type="password" class="form-control" id="renewPassword">
-                  </div>
-                </div>
-                <div class="text-center">
-                  <button type="submit" class="btn btn-primary">Change Password</button>
-                </div>
-              </form>
-              <!-- End Change Password Form -->
+              </div>
             </div>
           </div>
           <!-- End Bordered Tabs -->
@@ -175,13 +186,16 @@
 </section>
 <script>
   $(document).ready(function() {
-    $('body').on('submit', '#client-notes-form', function(e){
+    $('body').on('submit', '#client-notes-form, #client-activity-form', function(e){
       e.preventDefault();
       var formData = $(this).serialize();
 
       $.ajax({
         type: 'POST',
         url: $(this).attr('action'),
+        success: function(data) {
+          $('#exampleModalLong').modal('hide');
+        },
         data: formData,
         error: function(error) {
           console.error('Error submitting form:', error);

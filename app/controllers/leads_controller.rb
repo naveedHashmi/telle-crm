@@ -68,8 +68,8 @@ class LeadsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def lead_params
-    params.require(:lead).permit(:status, :amount_owed, :property_sold, :country, :date_sold, :mortgage_company,
-                                 :initial_bit_amount, :sold_amount, :label_id)
+    params.require(:lead).permit(:status, :amount_owed, :property_sold, :county, :date_sold, :mortgage_company,
+                                 :initial_bid_amount, :sold_amount, :label_id)
   end
 
   def user_params

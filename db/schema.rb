@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_30_050119) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_30_075345) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -44,10 +44,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_30_050119) do
     t.integer "status"
     t.decimal "amount_owed"
     t.string "property_sold"
-    t.string "country"
+    t.string "county"
     t.date "date_sold"
     t.string "mortgage_company"
-    t.decimal "initial_bit_amount"
+    t.decimal "initial_bid_amount"
     t.decimal "sold_amount"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

@@ -61,45 +61,45 @@
   <%= render 'leads', leads: @leads %>
 </div>
 <script>
-  // JavaScript to handle the dropdown behavior
-  document.addEventListener("DOMContentLoaded", function () {
-    const searchBox = document.querySelector(".search-box");
-    const dropdownContent = document.querySelector(".dropdown-content");
-    searchBox.addEventListener("input", function () {
-      const filter = searchBox.value.toUpperCase();
-      const options = dropdownContent.getElementsByTagName("option");
+  $(document).ready(function () {
+    const searchBox = $(".search-box");
+    const dropdownContent = $(".dropdown-content");
 
-      for (let i = 0; i < options.length; i++) {
-        const txtValue = options[i].textContent || options[i].innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-          options[i].style.display = "";
+    searchBox.on("input", function () {
+    const filter = searchBox.val().toUpperCase();
+    const options = dropdownContent.find("option");
+
+    options.each(function () {
+      const txtValue = $(this).text().toUpperCase();
+        if (txtValue.indexOf(filter) > -1) {
+          $(this).show();
         } else {
-          options[i].style.display = "none";
+          $(this).hide();
         }
-      }
+      });
     });
 
-    searchBox.addEventListener("focus", function () {
-      dropdownContent.style.display = "block";
+    searchBox.on("focus", function () {
+      dropdownContent.show();
     });
 
-    searchBox.addEventListener("blur", function () {
+    searchBox.on("blur", function () {
       setTimeout(function () {
-        dropdownContent.style.display = "none";
+        dropdownContent.hide();
       }, 200);
     });
 
-    $('.dropdown option').on('click', function (e) {
-      $('.search-box').val(e.target.text)
+    $(".dropdown option").on("click", function (e) {
+      $(".search-box").val(e.target.text);
 
       $.ajax({
-          type: "GET",
-          url: `${window.location.href}.js`,
-          data: { label_id: e.target.value },
-          error: function (error) {
-            console.error("Error:", error);
-          }
-        });
-    })
+        type: "GET",
+        url: `${window.location.href}.js`,
+        data: { label_id: e.target.value },
+        error: function (error) {
+          console.error("Error:", error);
+        }
+      });
+    });
   });
 </script>
