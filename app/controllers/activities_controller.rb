@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-class ActivitiesController < ApplicationController
-  before_action :set_activity, only: %i[show edit update destroy]
+class ActivitiesController < BaseController
+  before_action :set_activity, only: %i[show edit update destroy complete uncomplete]
   before_action :set_assignee, only: :create
 
   # GET /activities or /activities.json
   def index
-    @activities = Activity.all
+    @activities = Activity.includes(assignee: :user).custom_filter(filter_params)
   end
 
   # GET /activities/1 or /activities/1.json
@@ -59,6 +59,22 @@ class ActivitiesController < ApplicationController
     end
   end
 
+  def complete
+    respond_to do |format|
+      @activity.update(status: 'Complete')
+
+      format.js
+    end
+  end
+
+  def uncomplete
+    respond_to do |format|
+      @activity.update(status: 'Uncomplete')
+
+      format.js
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -73,5 +89,9 @@ class ActivitiesController < ApplicationController
 
   def set_assignee
     @assignee ||= activity_params[:assignee_type].constantize.find_by(id: activity_params[:assignee_id])
+  end
+
+  def filter_params
+    params['filter'] || {}
   end
 end

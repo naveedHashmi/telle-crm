@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class LeadsController < ApplicationController
+class LeadsController < BaseController
   before_action :set_lead, only: %i[show edit update destroy]
 
   include LeadsHelper
@@ -40,12 +40,16 @@ class LeadsController < ApplicationController
   # PATCH/PUT /leads/1 or /leads/1.json
   def update
     respond_to do |format|
-      if @lead.update(lead_params)
-        format.html { redirect_to lead_url(@lead), notice: 'Lead was successfully updated.' }
-        format.json { render :show, status: :ok, location: @lead }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @lead.errors, status: :unprocessable_entity }
+      ActiveRecord::Base.transaction do
+        if @lead.update(lead_params)
+          @lead.user.update!(user_params)
+
+          format.html { redirect_to lead_url(@lead), notice: 'Lead was successfully updated.' }
+          format.json { render :show, status: :ok, location: @lead }
+        else
+          format.html { render :edit, status: :unprocessable_entity }
+          format.json { render json: @lead.errors, status: :unprocessable_entity }
+        end
       end
     end
   end

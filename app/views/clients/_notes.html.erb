@@ -1,9 +1,9 @@
 <div class="overflow-auto">
   <% notes.each do |note| %>
     <div class="accordion-item">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#note<%= note.id %>" aria-expanded="false" aria-controls="collapseTwo">
-        <div class="post-item clearfix">
-          <h5 class="card-title"><%= User.first.name %> <span>| <%= note.created_at.strftime('%A, %b %e, %Y') %></span></h5>
+      <button class="accordion-button collapsed p-1" type="button" data-bs-toggle="collapse" data-bs-target="#note<%= note.id %>" aria-expanded="false" aria-controls="collapseTwo">
+        <div class="post-item clearfix pl-1 ml-1">
+          <p class="m-0 text-secondary"><span> <%= note.created_at.strftime('%A, %b %e, %Y') %></span> | <span class="text-secondary"><%= note.created_at.strftime('%I:%M %p') %></span></p>
           <p><%= note.description.slice(0, 50) %><%= note.description.length > 50 ? '....' : '' %></p>
         </div>
       </button>
@@ -11,6 +11,7 @@
         <div class="accordion-body">
           <p><%= note.description %></p>
         </div>
+        <p class='text-end m-2'><span class="text-info">Author: </span><%= User.first.name %></p>
       </div>
     </div>
   <% end %>

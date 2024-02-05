@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddNoteable < ActiveRecord::Migration[7.0]
   def change
     Note.destroy_all

@@ -49,8 +49,8 @@ gem 'bootsnap', require: false
 
 # Use Sass to process CSS
 gem 'bootstrap'
-gem 'sassc-rails'
 gem 'csv'
+gem 'sassc-rails'
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
@@ -77,6 +77,9 @@ group :development do
 
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
+
+  # Preview email in the default browser instead of sending it
+  gem 'letter_opener'
 end
 
 group :test do
@@ -84,3 +87,5 @@ group :test do
   gem 'capybara'
   gem 'selenium-webdriver'
 end
+
+gem 'devise', '~> 4.9'

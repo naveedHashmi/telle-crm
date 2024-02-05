@@ -1,0 +1,33 @@
+<p style="color: green"><%= notice %></p>
+<div class="row justify-content-center">
+  <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+    <div class="d-flex justify-content-center py-4">
+      <a href="index.html" class="logo d-flex align-items-center w-auto">
+        <%= link_to image_tag('logo.png', height: 150, width: 325)%>
+      </a>
+    </div>
+    <!-- End Logo -->
+    <div class="card mb-3">
+      <div class="card-body">
+        <div class="pt-4 pb-2">
+          <h5 class="card-title text-center pb-0 fs-4">Login to ORP CRM</h5>
+          <p class="text-center small">Enter your email & password to login</p>
+        </div>
+        <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: 'row g-3 needs-validation'}) do |f| %>
+          <div class="field col-12">
+            <%= f.label :email, class:"form-label" %><br />
+            <%= f.email_field :email, autofocus: true, required: true, class:"form-control" %>
+          </div>
+          <div class="field col-12 mb-5">
+            <%= f.label :password, class:"form-label" %><br />
+            <%= f.password_field :password, required: true, class:"form-control" %>
+          </div>
+          <div class="actions col-12 mb-5">
+            <%= f.submit "Log in", class:"btn btn-primary w-100" %>
+          </div>
+        <% end %>
+        <%= render "devise/shared/links" %>
+      </div>
+    </div>
+  </div>
+</div>

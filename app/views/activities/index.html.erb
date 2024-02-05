@@ -1,32 +1,69 @@
 <p style="color: green"><%= notice %></p>
 <div class='d-flex justify-content-between align-items-center'>
-  <h1>Activities</h1>
-  <%= link_to "New Activity", new_activity_path, class: 'btn btn-primary' %>
-</div>
-<div class='row'>
-  <div id="activities" class='col-7'>
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th scope="col">Date</th>
-          <th scope="col">What to do</th>
-          <th scope="col">Client</th>
-          <th scope="col">Priority</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @activities.each do |activity| %>
-          <%= render activity %>
-        <% end %>
-      </tbody>
-    </table>
+  <div class='col-4'>
+    <div class='d-flex justify-content-between align-items-center'>
+      <div class='col-5'>
+        <h1>Activities</h1>
+      </div>
+      <div class='col-6'>
+        <%= select_tag :activity_status_dropdown, options_for_select(['All', 'Complete', 'Uncomplete']), class: "form-control" %>
+      </div>
+    </div>
   </div>
-  <div class='col-5'>
-    <%= month_calendar(events: @activities, attribute: :date) do |date, activities| %>
-      <%= date.day %>
-      <br>
-      <br>
-      <span class="btn btn-success"><%= activities.count %></span>
-    <% end %>
+  <div>
+    <%= link_to "New Activity", new_activity_path, class: 'btn btn-primary' %>
   </div>
 </div>
+<div class="accordion">
+  <div class="accordion-item">
+    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#add-note" aria-expanded="false" aria-controls="collapseTwo">
+      <div class="post-item clearfix">
+        <a>Calendar</a>
+      </div>
+    </button>
+    <div id="add-note" class="accordion-collapse collapse">
+      <div class="accordion-body">
+        <div>
+          <%= month_calendar(events: @activities, attribute: :date) do |date, activities| %>
+            <%= date.day %>
+            <br>
+            <br>
+            <span class="btn btn-success"><%= activities.count %></span>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="activities">
+  <%= render 'activities_list', activities: @activities %>
+</div>
+<script>
+  $(document).ready(function() {
+    $('body').on('submit', '.activity-action-form', function(e){
+      e.preventDefault();
+      let confirmed = confirm('Are you sure you want to submit this form?');
+
+      if (confirmed) {
+        var formData = $(this).serialize();
+
+        $.ajax({
+          type: 'POST',
+          url: $(this).attr('action'),
+          data: formData
+        });
+      }
+    })
+
+    $('body').on('change', '#activity_status_dropdown', function(e){
+      e.preventDefault();
+      let dropdownValue = $('#activity_status_dropdown').val()
+      let status = dropdownValue == 'All' ? ['Complete', 'Uncomplete'] : dropdownValue
+      $.ajax({
+        type: 'GET',
+        url: '/activities.js',
+        data: {'filter[status]': status}
+      });
+    })
+  })
+</script>

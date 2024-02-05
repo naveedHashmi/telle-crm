@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddAssigneeToAcctivities < ActiveRecord::Migration[7.0]
   def change
     Activity.destroy_all

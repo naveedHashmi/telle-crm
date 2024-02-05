@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class NotesController < ApplicationController
+class NotesController < BaseController
   before_action :set_note, only: %i[show edit update destroy]
   before_action :set_assignee, only: :create
 
@@ -61,7 +61,7 @@ class NotesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def note_params
-    params.require(:note).permit(:author_id, :noteable_id, :noteable_type, :description)
+    params.require(:note).permit(:noteable_id, :noteable_type, :description).merge(author_id: current_user.id)
   end
 
   def set_assignee

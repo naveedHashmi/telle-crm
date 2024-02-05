@@ -1,0 +1,1 @@
+$('body').find('#activity-action-<%= @activity.id %>').html("<%= escape_javascript render(partial: 'action_form', locals: {activity: @activity})%>")

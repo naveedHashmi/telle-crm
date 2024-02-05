@@ -1,9 +1,17 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  resources :labels
-  resources :notes
-  resources :activities
+  devise_for :users
+
+  resources :labels, :notes, :clients
+
+  resources :activities do
+    member do
+      post :complete
+      post :uncomplete
+    end
+  end
+
   resources :leads do
     collection do
       get :upload_csv
@@ -11,7 +19,8 @@ Rails.application.routes.draw do
       post :mappings
     end
   end
-  resources :clients
-  resources :users
+
+  resources :users, only: %i[new create edit update destroy]
+
   root 'clients#index'
 end

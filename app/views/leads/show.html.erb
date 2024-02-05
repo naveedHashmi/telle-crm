@@ -1,7 +1,7 @@
 <section class="section profile">
   <h1>Lead Profile</h1>
   <div class='row'>
-    <div class="col-xl-12">
+    <div class="col-xl-8">
       <div class="card">
         <div class="card-body pt-3">
           <!-- Bordered Tabs -->
@@ -35,7 +35,6 @@
                     <div id="add-note" class="accordion-collapse collapse">
                       <div class="accordion-body">
                         <%= form_with(model: Note.new, url: notes_path(format: :js), method: 'post', id: 'lead-notes-form') do |form| %>
-                          <%= form.hidden_field :author_id, value: User.first.id %>
                           <%= form.hidden_field :noteable_type, value: 'Lead' %>
                           <%= form.hidden_field :noteable_id, value: @lead.id %>
                           <div class="mb-3">
@@ -128,6 +127,69 @@
         </div>
       </div>
     </div>
+    <div class="col-xl-4">
+      <div class="card">
+        <div class="card-body">
+          <div class="tab-content pt-2">
+            <div class="tab-pane fade show active profile-overview" id="profile-overview">
+              <h5 class="card-title">Profile Details</h5>
+              <div class="row">
+                <div class="col-lg-4 col-md-4 label ">Full Name</div>
+                <div class="col-lg-8 col-md-8"><%= @lead.user&.name%></div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-lg-4 col-md-4 label">Status</div>
+                <div class="col-lg-8 col-md-8"><%= @lead.status %></div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-lg-4 col-md-4 label">Amount Owed</div>
+                <div class="col-lg-8 col-md-8">$<%= @lead.amount_owed %></div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-lg-4 col-md-4 label">Property Sold</div>
+                <div class="col-lg-8 col-md-8"><%= @lead.property_sold %></div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-lg-4 col-md-4 label">County</div>
+                <div class="col-lg-8 col-md-8"><%= @lead.county %></div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-lg-4 col-md-4 label">Date Sold</div>
+                <div class="col-lg-8 col-md-8"><%= @lead.date_sold %></div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-lg-4 col-md-4 label">Mortgage Company</div>
+                <div class="col-lg-8 col-md-8"><%= @lead.mortgage_company %></div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-lg-4 col-md-4 label">Initial Bid Amount</div>
+                <div class="col-lg-8 col-md-8"><%= @lead.initial_bid_amount %></div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-lg-4 col-md-4 label">Sold Amount</div>
+                <div class="col-lg-8 col-md-8"><%= @lead.sold_amount %></div>
+              </div>
+              <hr>
+              <hr>
+              <div class='d-flex justify-content-center align-items-center'>
+                <%= link_to "Edit", edit_lead_path(@lead), class: 'btn btn-success' %> |
+                <%= link_to "Back to leads", leads_path, class: 'btn btn-info' %> |
+                <%= button_to "Delete", @lead, method: :delete, class: 'btn btn-danger' %>
+              </div>
+            </div>
+          </div>
+          <!-- End Bordered Tabs -->
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 <script>
@@ -142,11 +204,27 @@
         data: formData,
         success: function(data) {
           $('#exampleModalLong').modal('hide');
+          $("#note_description").val('')
         },
         error: function(error) {
           console.error('Error submitting form:', error);
         }
       });
+    })
+
+    $('body').on('submit', '.activity-action-form', function(e){
+      e.preventDefault();
+      let confirmed = confirm('Are you sure you want to submit this form?');
+
+      if (confirmed) {
+        var formData = $(this).serialize();
+
+        $.ajax({
+          type: 'POST',
+          url: $(this).attr('action'),
+          data: formData
+        });
+      }
     })
   })
 </script>
