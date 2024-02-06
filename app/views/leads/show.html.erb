@@ -26,7 +26,7 @@
             <div class="tab-pane fade show active pt-3" id="lead-notes">
               <div class="card-body pb-0">
                 <div class="accordion">
-                  <div class="accordion-item">
+                  <div class="accordion-item" data-controller='notes'>
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#add-note" aria-expanded="false" aria-controls="collapseTwo">
                       <div class="post-item clearfix">
                         <a>Add Note</a>
@@ -34,7 +34,7 @@
                     </button>
                     <div id="add-note" class="accordion-collapse collapse">
                       <div class="accordion-body">
-                        <%= form_with(model: Note.new, url: notes_path(format: :js), method: 'post', id: 'lead-notes-form') do |form| %>
+                        <%= form_with(model: Note.new, url: notes_path(format: :js), data: {action: 'submit->notes#submit_notes'}, method: 'post', id: 'notes-form') do |form| %>
                           <%= form.hidden_field :noteable_type, value: 'Lead' %>
                           <%= form.hidden_field :noteable_id, value: @lead.id %>
                           <div class="mb-3">
@@ -65,7 +65,7 @@
                 </button>
               </div>
               <div class='row scrollable-div' style="max-height: 65vh; overflow-y: auto; border: 1px solid #ddd; padding: 10px;">
-                <div id="activities-list" class='col-12'>
+                <div id="activities-list" class='col-12' data-controller="activities">
                   <%= render partial: 'activities/activities_list', locals: {activities: @lead.activities} %>
                 </div>
               </div>
@@ -192,39 +192,3 @@
     </div>
   </div>
 </section>
-<script>
-  $(document).ready(function() {
-    $('body').on('submit', '#lead-notes-form, #lead-activity-form', function(e){
-      e.preventDefault();
-      var formData = $(this).serialize();
-
-      $.ajax({
-        type: 'POST',
-        url: $(this).attr('action'),
-        data: formData,
-        success: function(data) {
-          $('#exampleModalLong').modal('hide');
-          $("#note_description").val('')
-        },
-        error: function(error) {
-          console.error('Error submitting form:', error);
-        }
-      });
-    })
-
-    $('body').on('submit', '.activity-action-form', function(e){
-      e.preventDefault();
-      let confirmed = confirm('Are you sure you want to submit this form?');
-
-      if (confirmed) {
-        var formData = $(this).serialize();
-
-        $.ajax({
-          type: 'POST',
-          url: $(this).attr('action'),
-          data: formData
-        });
-      }
-    })
-  })
-</script>

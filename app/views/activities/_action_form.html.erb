@@ -1,3 +1,4 @@
-<%= form_with(url: status_action_path(activity), class: 'activity-action-form') do |form| %>
-  <%= form.submit status_action_text(activity), data: { confirm: 'Are you sure to perform this action?' }, class: status_action_class(activity) %>
-<% end %>
+
+  <%= form_with(url: status_action_path(activity), class: 'activity-action-form', data: {action: 'submit->activities#submit_activities'}) do |form| %>
+    <%= form.submit status_action_text(activity), class: status_action_class(activity) %>
+  <% end %>
