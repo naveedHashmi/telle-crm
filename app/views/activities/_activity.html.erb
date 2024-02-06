@@ -2,7 +2,7 @@
   <tr id="<%= dom_id activity %>">
     <td scope="row"><%= activity.date.strftime('%A, %b %e, %Y') %></td>
     <td><%= activity.to_do %></td>
-    <td><%=link_to activity.assignee&.user.name, activity_assignee_path(activity), class:"text-secondary" %></td>
+    <td><%=link_to activity.assignee&.name, activity_assignee_path(activity), class:"text-secondary" %></td>
     <td><%= activity.priority %></td>
     <td><%= activity.status %></td>
     <td id="activity-action-<%= activity.id %>">

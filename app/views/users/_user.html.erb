@@ -1,10 +1,9 @@
-<div id="<%= dom_id user %>">
-  <p>
-    <strong>Name:</strong>
-    <%= user.name %>
-  </p>
-  <p>
-    <strong>Email:</strong>
-    <%= user.email %>
-  </p>
+<div>
+  <tr id="<%= dom_id user %>">
+    <td scope="col"><%= user.first_name %></td>
+    <td scope="col"><%= user.last_name %></td>
+    <td scope="col"><%= user.phone_no %></td>
+    <td scope="col"><%= user.email %></td>
+    <th class="d-flex"><%= link_to "Edit", edit_user_path(user), class: 'btn btn-success' %> | <%= button_to "Delete", user, method: :delete, class: 'btn btn-danger' %></th>
+  </tr>
 </div>

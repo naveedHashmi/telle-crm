@@ -5,7 +5,7 @@ class ClientsController < BaseController
 
   # GET /clients or /clients.json
   def index
-    @clients = Client.includes(:user).all
+    @clients = Client.all
   end
 
   # GET /clients/1 or /clients/1.json
@@ -14,7 +14,6 @@ class ClientsController < BaseController
   # GET /clients/new
   def new
     @client = Client.new
-    @client.user = User.new
   end
 
   # GET /clients/1/edit
@@ -41,7 +40,6 @@ class ClientsController < BaseController
     respond_to do |format|
       ActiveRecord::Base.transaction do
         if @client.update(client_params)
-          @client.user.update!(user_params)
           format.html { redirect_to client_url(@client), notice: 'Client was successfully updated.' }
           format.json { render :show, status: :ok, location: @client }
         else
@@ -71,10 +69,6 @@ class ClientsController < BaseController
 
   # Only allow a list of trusted parameters through.
   def client_params
-    params.require(:client).permit(:phone, :amount_owed, :address, :claim_no)
-  end
-
-  def user_params
-    params.require(:client).permit(:name, :email)
+    params.require(:client).permit(:phone, :amount_owed, :address, :claim_no, :name, :email)
   end
 end

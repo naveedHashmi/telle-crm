@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 20_240_205_152_729) do
+ActiveRecord::Schema[7.0].define(version: 20_240_206_155_727) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -36,6 +36,8 @@ ActiveRecord::Schema[7.0].define(version: 20_240_205_152_729) do
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.string 'claim_no', default: '', null: false
+    t.string 'name', default: '', null: false
+    t.string 'email', default: '', null: false
   end
 
   create_table 'labels', force: :cascade do |t|
@@ -57,6 +59,7 @@ ActiveRecord::Schema[7.0].define(version: 20_240_205_152_729) do
     t.datetime 'updated_at', null: false
     t.bigint 'client_id'
     t.bigint 'label_id', null: false
+    t.string 'name', default: '', null: false
     t.index ['client_id'], name: 'index_leads_on_client_id'
     t.index ['label_id'], name: 'index_leads_on_label_id'
   end
@@ -77,8 +80,6 @@ ActiveRecord::Schema[7.0].define(version: 20_240_205_152_729) do
     t.string 'email', default: '', null: false
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
-    t.string 'userable_type'
-    t.integer 'userable_id'
     t.string 'encrypted_password', default: '', null: false
     t.string 'reset_password_token'
     t.datetime 'reset_password_sent_at'
@@ -87,10 +88,12 @@ ActiveRecord::Schema[7.0].define(version: 20_240_205_152_729) do
     t.datetime 'confirmed_at'
     t.datetime 'confirmation_sent_at'
     t.string 'unconfirmed_email'
+    t.string 'first_name', default: '', null: false
+    t.string 'last_name', default: '', null: false
+    t.string 'phone_no', default: '', null: false
     t.index ['email'], name: 'index_users_on_email', unique: true,
                        where: "((email IS NOT NULL) AND ((email)::text <> ''::text))"
     t.index ['reset_password_token'], name: 'index_users_on_reset_password_token', unique: true
-    t.index %w[userable_type userable_id], name: 'index_users_on_userable'
   end
 
   add_foreign_key 'leads', 'clients'

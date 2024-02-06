@@ -42,7 +42,6 @@ class LeadsController < BaseController
     respond_to do |format|
       ActiveRecord::Base.transaction do
         if @lead.update(lead_params)
-          @lead.user.update!(user_params)
 
           format.html { redirect_to lead_url(@lead), notice: 'Lead was successfully updated.' }
           format.json { render :show, status: :ok, location: @lead }
@@ -118,7 +117,7 @@ class LeadsController < BaseController
   # Only allow a list of trusted parameters through.
   def lead_params
     params.require(:lead).permit(:status, :amount_owed, :property_sold, :county, :date_sold, :mortgage_company,
-                                 :initial_bid_amount, :sold_amount, :label_id)
+                                 :initial_bid_amount, :sold_amount, :label_id, :name)
   end
 
   def user_params
