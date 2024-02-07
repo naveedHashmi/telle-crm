@@ -17,4 +17,17 @@ export default class extends Controller {
       });
     }
   }
+
+  filter_activities(e) {
+    e.preventDefault();
+
+    let dropdownValue = $('#activity_status_dropdown').val()
+    let status = dropdownValue == 'All' ? ['Complete', 'Uncomplete'] : dropdownValue
+
+    $.ajax({
+      type: 'GET',
+      url: '/activities.js',
+      data: {'filter[status]': status}
+      });
+  }
 }

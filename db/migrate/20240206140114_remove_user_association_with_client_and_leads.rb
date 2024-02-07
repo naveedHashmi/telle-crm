@@ -14,8 +14,6 @@ class RemoveUserAssociationWithClientAndLeads < ActiveRecord::Migration[7.0]
       user.userable_type.constantize.update(name: user.name, email: user.email)
     end
 
-    User.where(userable_type: %w[Lead Client]).destroy_all
-
     remove_reference :users, :userable
     remove_column :users, :userable_type
   end
