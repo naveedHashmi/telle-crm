@@ -6,12 +6,12 @@ class RemoveUserAssociationWithClientAndLeads < ActiveRecord::Migration[7.0]
     add_column :clients, :name, :string, default: '', null: false
     add_column :clients, :email, :string, default: '', null: false
 
-    Lead.includes(:user).where(users: { userable_type: 'Lead' }).find_each do |lead|
-      lead.update(name: lead.user.name)
+    User.where(userable_type: 'Lead').find_each do |user|
+      user.userable_type.constantize.update(name: user.name)
     end
 
-    Client.includes(:user).where(users: { userable_type: 'Client' }).find_each do |client|
-      client.update(name: client.user.name, email: client.user.email)
+    User.where(userable_type: 'Client').find_each do |user|
+      user.userable_type.constantize.update(name: user.name, email: user.email)
     end
 
     User.where(userable_type: %w[Lead Client]).destroy_all
