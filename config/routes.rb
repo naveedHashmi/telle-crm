@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  default_url_options host: ENV['URL_HOST']
+
   get '/quickbooks/authorize', to: 'quickbooks#authorize'
   get '/quickbooks/callback', to: 'quickbooks#callback'
 
