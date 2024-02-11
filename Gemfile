@@ -57,6 +57,12 @@ gem 'sassc-rails'
 
 gem 'simple_calendar', '~> 2.4'
 
+
+gem 'oauth2' #quickbooks dependency
+gem 'roxml' #quickbooks dependency
+gem 'nokogiri' #quickbooks dependency
+gem 'activemodel', require: 'active_model' #quickbooks dependency
+gem 'quickbooks-ruby'
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'byebug'

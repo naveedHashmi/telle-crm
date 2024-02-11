@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  get '/quickbooks/authorize', to: 'quickbooks#authorize'
+  get '/quickbooks/callback', to: 'quickbooks#callback'
+
   devise_for :users
 
   resources :labels, :notes, :clients
