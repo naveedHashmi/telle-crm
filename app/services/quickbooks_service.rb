@@ -26,4 +26,16 @@ class QuickbooksService
       scope: 'com.intuit.quickbooks.accounting'
     )
   end
+
+  def save_credentials(resp, params)
+    user = User.find(ENV['ADMIN_ID'])
+
+    quickbooks_credentials = user.quickbooks_credential || QuickbooksCredential.new(user:)
+    quickbooks_credentials.assign_attributes(access_token: resp.token,
+                                             refresh_token: resp.refresh_token,
+                                             realm_id: params[:realmId],
+                                             access_token_expires_at: Time.at(resp.expires_at),
+                                             refresh_token_expires_at: Time.now + resp.params.x_refresh_token_expires_in.to_i.seconds)
+    quickbooks_credentials.save!
+  end
 end

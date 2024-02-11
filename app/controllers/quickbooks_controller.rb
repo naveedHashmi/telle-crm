@@ -6,13 +6,8 @@ class QuickbooksController < ApplicationController
   end
 
   def callback
-    # use the state value to retrieve from your backend any information you need to identify the customer in your system
-    # save your tokens here. For example:
-    # quickbooks_credentials.update_attributes(access_token: resp.token, refresh_token: resp.refresh_token, realm_id: params[:realmId])
     if params[:state].present? && resp = @quickbooks_service.get_token(params)
-      # save your tokens here. For example:
-      # quickbooks_credentials.update_attributes(access_token: resp.token, refresh_token: resp.refresh_token, realm_id: params[:realmId])
-      # byebug
+      @quickbooks_service.save_credentials(resp, params)
     end
     redirect_to root_path, notice: 'Successfully connected to QuickBooks!'
   end

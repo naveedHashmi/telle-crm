@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_06_215143) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_11_163542) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -73,6 +73,18 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_06_215143) do
     t.index ["noteable_type", "noteable_id"], name: "index_notes_on_noteable"
   end
 
+  create_table "quickbooks_credentials", force: :cascade do |t|
+    t.text "access_token", null: false
+    t.datetime "access_token_expires_at", precision: nil, null: false
+    t.text "refresh_token", null: false
+    t.datetime "refresh_token_expires_at", precision: nil, null: false
+    t.text "realm_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_quickbooks_credentials_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name", default: "", null: false
     t.string "email", default: "", null: false
@@ -96,4 +108,5 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_06_215143) do
   add_foreign_key "leads", "clients"
   add_foreign_key "leads", "labels"
   add_foreign_key "notes", "users", column: "author_id"
+  add_foreign_key "quickbooks_credentials", "users", on_delete: :cascade
 end

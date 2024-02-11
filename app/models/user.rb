@@ -5,7 +5,8 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable,
          :recoverable
-  belongs_to :userable, polymorphic: true, optional: true
+
+  has_one :quickbooks_credential
 
   validate :name, prepend: true
 end
