@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
   get '/quickbooks/authorize', to: 'quickbooks#authorize'
   get '/quickbooks/callback', to: 'quickbooks#callback'
+  get '/quickbooks/customers', to: 'quickbooks#customers'
 
   devise_for :users
 
