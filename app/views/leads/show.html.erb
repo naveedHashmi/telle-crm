@@ -178,6 +178,11 @@
                 <div class="col-lg-8 col-md-8"><%= @lead.sold_amount %></div>
               </div>
               <hr>
+              <div class="row">
+                <div class="col-lg-4 col-md-4 label">Lawsuit #</div>
+                <div class="col-lg-8 col-md-8"><%= @lead.lawsuit_no %></div>
+              </div>
+              <hr>
               <hr>
               <div class='d-flex justify-content-center align-items-center'>
                 <%= link_to "Edit", edit_lead_path(@lead), class: 'btn btn-success' %> |

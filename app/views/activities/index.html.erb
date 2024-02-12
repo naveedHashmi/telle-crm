@@ -1,4 +1,3 @@
-  
 <p style="color: green"><%= notice %></p>
 <div data-controller="activities">
   <div class='d-flex justify-content-between align-items-center'>
@@ -9,7 +8,10 @@
         </div>
         <div class='col-6'>
           <%= form_with(url: activities_path, id: 'activity_status_filter_form', method: 'GET', data: { turbo_frame: 'activities' }) do |form| %>
-            <%= select_tag 'filter[status]', options_for_select(['All', 'Complete', 'Uncomplete'], params.dig('filter', 'status')), class: "form-control", data: { action: 'change->activities#filter_activities' } %>
+            <div class='d-flex justify-content-between align-items-center'>
+              <h5>Status: </h5>
+              <%= select_tag 'filter[status]', options_for_select(['All', 'Complete', 'Uncomplete'], params.dig('filter', 'status')), class: "form-control", data: { action: 'change->activities#filter_activities' } %>
+            </div>
           <% end %>
         </div>
       </div>

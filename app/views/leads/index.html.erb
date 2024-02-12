@@ -32,7 +32,7 @@
   }
 </style>
 <div class='d-flex justify-content-between align-items-center'>
-  <div class='col-2 d-flex justify-content-between align-items-center'>
+  <div class='col-6 d-flex justify-content-between align-items-center'>
     <h1>Leads</h1>
     <div class="dropdown">
       <input type="text" placeholder="Search label.........      v" class="search-box">
@@ -48,6 +48,14 @@
         <% end %>
         <!-- Add more options as needed -->
       </div>
+    </div>
+    <div class='col-6 justify-content-between align-items-center' data-controller="leads">
+      <%= form_with(url: leads_path(format: :js), id: 'leads_users_filter_form', method: 'GET') do |form| %>
+        <div class='d-flex justify-content-between align-items-center'>
+          <h5>Users: </h5>
+          <%= select_tag 'filter[user_id]', options_for_select(lead_users_options, params.dig('filter', 'user_id')), class: "form-control", data: { action: 'change->leads#submit_leads_users_filter_form' } %>
+        </div>
+      <% end %>
     </div>
   </div>
   <!-- Add more options as needed -->

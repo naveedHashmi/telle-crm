@@ -19,4 +19,12 @@ module LeadsHelper
   def mapping_options
     dropdwon_mappings.map { |key, value| [value, key] }
   end
+
+  def lead_users_options
+    [%i[All All]] + lead_users_select_options
+  end
+
+  def lead_users_select_options
+    User.pluck(Arel.sql("CONCAT(first_name, ' ', last_name) AS full_name"), :id).reject { |user| user.first.blank? }
+  end
 end

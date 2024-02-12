@@ -9,6 +9,7 @@ class LeadsController < BaseController
     @leads = Lead.all
 
     @leads = @leads.where(label_id: [JSON.parse(params[:label_id])].flatten) if params[:label_id].present?
+    @leads = @leads.custom_filter(filter_params)
   end
 
   # GET /leads/1 or /leads/1.json
@@ -28,8 +29,6 @@ class LeadsController < BaseController
       @lead = Lead.new(lead_params)
 
       if @lead.save
-        @user = User.create!(user_params.merge(userable: @lead))
-
         redirect_to leads_path, notice: 'Client successfully created.'
       else
         render :new
@@ -117,7 +116,11 @@ class LeadsController < BaseController
   # Only allow a list of trusted parameters through.
   def lead_params
     params.require(:lead).permit(:status, :amount_owed, :property_sold, :county, :date_sold, :mortgage_company,
-                                 :initial_bid_amount, :sold_amount, :label_id, :name)
+                                 :initial_bid_amount, :sold_amount, :label_id, :name, :lawsuit_no, :user_id)
+  end
+
+  def filter_params
+    params['filter'] || {}
   end
 
   def user_params
