@@ -4,9 +4,7 @@
 
 import { application } from "./application"
 
-import NotesController from "./notes_controller"
 import ActivitiesController from "./activities_controller"
 import LeadsController from "./leads_controller"
-application.register("notes", NotesController)
 application.register("activities", ActivitiesController)
 application.register("leads", LeadsController)

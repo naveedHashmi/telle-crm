@@ -26,7 +26,7 @@ class NotesController < BaseController
     @note.save!
     @notes = @assignee.notes.order(created_at: :desc)
 
-    respond_to(&:js)
+    respond_to(&:turbo_stream)
   end
 
   # PATCH/PUT /notes/1 or /notes/1.json

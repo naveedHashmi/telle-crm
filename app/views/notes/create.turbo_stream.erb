@@ -1,0 +1,2 @@
+<%= turbo_stream.prepend 'notes-list', partial: 'clients/notes', locals: { notes: [@note] } %>
+<%= turbo_stream.replace 'notes-form', partial: 'shared/notes_form', locals: { noteable_id: @assignee.id, noteable_type: @assignee.class.to_s} %>

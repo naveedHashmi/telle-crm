@@ -25,14 +25,12 @@ class LeadsController < BaseController
 
   # POST /leads or /leads.json
   def create
-    ActiveRecord::Base.transaction do
-      @lead = Lead.new(lead_params)
+    @lead = Lead.new(lead_params)
 
-      if @lead.save
-        redirect_to leads_path, notice: 'Client successfully created.'
-      else
-        render :new
-      end
+    if @lead.save
+      redirect_to leads_path, notice: 'Client successfully created.'
+    else
+      render :new
     end
   end
 

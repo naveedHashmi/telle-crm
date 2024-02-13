@@ -28,24 +28,14 @@
                     </button>
                     <div id="add-note" class="accordion-collapse collapse">
                       <div class="accordion-body">
-                        <%= form_with(model: Note.new, url: notes_path(format: :js), method: 'post', id: 'notes-form', data: {action: 'submit->notes#submit_notes'}) do |form| %>
-                          <%= form.hidden_field :noteable_type, value: 'Client' %>
-                          <%= form.hidden_field :noteable_id, value: @client.id %>
-                          <div class="mb-3">
-                            <label for="inputPassword" class="col-sm-2 col-form-label">Note: </label>
-                            <%= form.text_area :description, class: "form-control", style:"height: 100px" %>
-                          </div>
-                          <div class="mb-3">
-                            <%= form.submit "Save", class: "btn btn-primary" %>
-                          </div>
-                        <% end %>
+                        <%= render partial: 'shared/notes_form', locals: { noteable_id: @client.id, noteable_type: 'Client' } %>
                       </div>
                     </div>
                   </div>
                   <div class="scrollable-div" style="max-height: 65vh; overflow-y: auto; border: 1px solid #ddd; padding: 10px;">
-                    <div id='notes-list'>
+                    <%= turbo_frame_tag 'notes-list' do %>
                       <%= render 'notes', notes: @client.notes.order(created_at: :desc) %>
-                    </div>
+                    <% end %>
                   </div>
                 </div>
                 <!-- End sidebar recent posts-->

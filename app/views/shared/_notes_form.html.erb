@@ -1,0 +1,13 @@
+<%= turbo_frame_tag 'notes-form' do %>
+  <%= form_with(model: Note.new, url: notes_path, method: 'post') do |form| %>
+    <%= form.hidden_field :noteable_type, value: noteable_type %>
+    <%= form.hidden_field :noteable_id, value: noteable_id %>
+    <div class="mb-3">
+      <label for="inputPassword" class="col-sm-2 col-form-label">Note: </label>
+      <%= form.text_area :description, class: "form-control", style:"height: 100px" %>
+    </div>
+    <div class="mb-3">
+      <%= form.submit "Save", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+<% end %>
