@@ -65,6 +65,7 @@ class LeadsController < BaseController
   def mappings
     @file = params[:file]
     @headers = CSV.open(@file.path, 'r', &:readline)
+    respond_to(&:turbo_stream)
   end
 
   def process_csv

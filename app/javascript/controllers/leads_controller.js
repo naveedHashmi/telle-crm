@@ -29,4 +29,12 @@ export default class extends Controller {
       data: {'filter[user_id]': dropdownValue}
       });
   }
+
+  submit_mapping_form(e) {
+    let form = $('#mapping-form')
+
+    form.attr('action', '/leads/process_csv');
+    form.attr('id', 'file-process-form');
+  }
+
 }

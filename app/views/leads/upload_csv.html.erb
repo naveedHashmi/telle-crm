@@ -1,31 +1,11 @@
-<h1>Upload CSV File</h1>
-<%= form_with(url: mappings_leads_path(format: :js), id: 'mapping-form') do |form| %>
-  <%= form.file_field :file %>
-  <div id="mapping-list">
-    <%= form.submit 'Upload' %>
+<%= turbo_frame_tag 'lead-section' do %>
+  <div data-controller="leads">
+    <h1>Upload CSV File</h1>
+    <%= form_with(url: mappings_leads_path, id: 'mapping-form', data: {action: 'turbo:submit-end->leads#submit_mapping_form'}) do |form| %>
+      <%= form.file_field :file %>
+      <%= turbo_frame_tag "mapping-list" do %>
+        <%= form.submit 'Upload' %>
+      <% end %>
+    <% end %>
   </div>
 <% end %>
-<script>
-  $(document).ready(function() {
-    $('body').on('submit', '#mapping-form', function(e){
-      e.preventDefault();
-      var formData = new FormData(this);
-
-      $.ajax({
-        url: $(this).attr("action"),
-        type: $(this).attr("method"),
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function(response) {
-          $('#mapping-form').attr('action', '/leads/process_csv');
-
-          $('#mapping-form').attr('id', 'file-process-form');
-        },
-        error: function(error) {
-          console.error(error);
-        }
-      });
-    })
-  })
-</script>
