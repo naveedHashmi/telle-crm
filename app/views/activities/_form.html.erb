@@ -20,7 +20,7 @@
   <div class="mb-3">
     <%= form.label :Assignee, class: "form-label" %>
     <%= form.select :assignee_type, options_for_select(['Client', 'Lead']), class: "form-control" %>
-    <%= form.select :assignee_id, options_for_select(Client.joins(:user).pluck('users.name', :id)), class: "form-control" %>
+    <%= form.select :assignee_id, options_for_select(Client.pluck(:name, :id)), class: "form-control" %>
   </div>
   <div class="mb-3">
     <%= form.label :priority, class: "form-label" %>

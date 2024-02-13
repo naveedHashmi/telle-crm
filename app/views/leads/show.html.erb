@@ -1,199 +1,201 @@
-<section class="section profile">
-  <h1>Lead Profile</h1>
-  <div class='row'>
-    <div class="col-xl-8">
-      <div class="card">
-        <div class="card-body pt-3">
-          <!-- Bordered Tabs -->
-          <ul class="nav nav-tabs nav-tabs-bordered">
-            <li class="nav-item">
-              <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#lead-notes">Notes</button>
-            </li>
-            <li class="nav-item">
-              <button class="nav-link" data-bs-toggle="tab" data-bs-target="#lead-activities">Activities</button>
-            </li>
-            <li class="nav-item">
-              <button class="nav-link" data-bs-toggle="tab" data-bs-target="#lead-calendar">Calendar</button>
-            </li>
-            <li class="nav-item">
-              <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-overview">Family Tree</button>
-            </li>
-          </ul>
-          <div class="tab-content pt-2">
-            <div class="tab-pane fade profile-overview" id="profile-overview">
-              TODO ...
-            </div>
-            <div class="tab-pane fade show active pt-3" id="lead-notes">
-              <div class="card-body pb-0">
-                <div class="accordion">
-                  <div class="accordion-item" data-controller='notes'>
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#add-note" aria-expanded="false" aria-controls="collapseTwo">
-                      <div class="post-item clearfix">
-                        <a>Add Note</a>
-                      </div>
-                    </button>
-                    <div id="add-note" class="accordion-collapse collapse">
-                      <div class="accordion-body">
-                        <%= form_with(model: Note.new, url: notes_path(format: :js), data: {action: 'submit->notes#submit_notes'}, method: 'post', id: 'notes-form') do |form| %>
-                          <%= form.hidden_field :noteable_type, value: 'Lead' %>
-                          <%= form.hidden_field :noteable_id, value: @lead.id %>
-                          <div class="mb-3">
-                            <label for="inputPassword" class="col-sm-2 col-form-label">Note: </label>
-                            <%= form.text_area :description, class: "form-control", style:"height: 100px" %>
-                          </div>
-                          <div class="mb-3">
-                            <%= form.submit "Save", class: "btn btn-primary" %>
-                          </div>
-                        <% end %>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="scrollable-div" style="max-height: 65vh; overflow-y: auto; border: 1px solid #ddd; padding: 10px;">
-                    <div id='notes-list'>
-                      <%= render 'clients/notes', notes: @lead.notes.order(created_at: :desc) %>
-                    </div>
-                  </div>
-                </div>
-                <!-- End sidebar recent posts-->
+<%= turbo_frame_tag 'lead-info' do %>
+  <section class="section profile">
+    <h1>Lead Profile</h1>
+    <div class='row'>
+      <div class="col-xl-8">
+        <div class="card">
+          <div class="card-body pt-3">
+            <!-- Bordered Tabs -->
+            <ul class="nav nav-tabs nav-tabs-bordered">
+              <li class="nav-item">
+                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#lead-notes">Notes</button>
+              </li>
+              <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#lead-activities">Activities</button>
+              </li>
+              <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#lead-calendar">Calendar</button>
+              </li>
+              <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-overview">Family Tree</button>
+              </li>
+            </ul>
+            <div class="tab-content pt-2">
+              <div class="tab-pane fade profile-overview" id="profile-overview">
+                TODO ...
               </div>
-            </div>
-            <div class="tab-pane fade pt-3" id="lead-activities">
-              <div class='d-flex justify-content-between align-items-center'>
-                <h1><%= @lead.name %> Activities</h1>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalLong">
-                  New Activity
-                </button>
-              </div>
-              <div class='row scrollable-div' style="max-height: 65vh; overflow-y: auto; border: 1px solid #ddd; padding: 10px;">
-                <div id="activities-list" class='col-12' data-controller="activities">
-                  <%= render partial: 'activities/activities_list', locals: {activities: @lead.activities} %>
-                </div>
-              </div>
-            </div>
-            <div class="tab-pane fade pt-3" id="lead-calendar">
-              <div class='row scrollable-div' style="max-height: 65vh; overflow-y: auto; border: 1px solid #ddd; padding: 10px;">
-                <div class='col-12'>
-                  <%= month_calendar(events: @lead.activities, attribute: :date) do |date, activities| %>
-                    <%= date.day %>
-                    <br>
-                    <br>
-                    <span class="btn btn-success"><%= activities.count %></span>
-                  <% end %>
-                </div>
-              </div>
-            </div>
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">New Activity</h5>
-                  </div>
-                  <div class="modal-body">
-                    <%= form_with(model: Activity.new, url: activities_path(format: :js), method: 'post', id: 'lead-activity-form') do |form| %>
-                      <div class="mb-3">
-                        <%= form.label :date, class: "form-label" %>
-                        <%= form.date_field :date, class: "form-control" %>
-                      </div>
-                      <div class="mb-3">
-                        <%= form.label :to_do, class: "form-label" %>
-                        <%= form.text_field :to_do, class: "form-control" %>
-                      </div>
-                      <div class="mb-3">
-                        <%= form.hidden_field :assignee_type, value: 'Lead' %>
-                        <%= form.hidden_field :assignee_id, value: @lead.id %>
-                        <div class="row">
-                          <div class="col-lg-3 col-md-4 label ">Lead</div>
-                          <div class="col-lg-9 col-md-8"><%= @lead.name %></div>
+              <div class="tab-pane fade show active pt-3" id="lead-notes">
+                <div class="card-body pb-0">
+                  <div class="accordion">
+                    <div class="accordion-item" data-controller='notes'>
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#add-note" aria-expanded="false" aria-controls="collapseTwo">
+                        <div class="post-item clearfix">
+                          <a>Add Note</a>
+                        </div>
+                      </button>
+                      <div id="add-note" class="accordion-collapse collapse">
+                        <div class="accordion-body">
+                          <%= form_with(model: Note.new, url: notes_path(format: :js), data: {action: 'submit->notes#submit_notes'}, method: 'post', id: 'notes-form') do |form| %>
+                            <%= form.hidden_field :noteable_type, value: 'Lead' %>
+                            <%= form.hidden_field :noteable_id, value: @lead.id %>
+                            <div class="mb-3">
+                              <label for="inputPassword" class="col-sm-2 col-form-label">Note: </label>
+                              <%= form.text_area :description, class: "form-control", style:"height: 100px" %>
+                            </div>
+                            <div class="mb-3">
+                              <%= form.submit "Save", class: "btn btn-primary" %>
+                            </div>
+                          <% end %>
                         </div>
                       </div>
-                      <div class="mb-3">
-                        <%= form.label :priority, class: "form-label" %>
-                        <%= form.select :priority, options_for_select([ 'Regular','High', 'Urgent']), class: "form-control" %>
+                    </div>
+                    <div class="scrollable-div" style="max-height: 65vh; overflow-y: auto; border: 1px solid #ddd; padding: 10px;">
+                      <div id='notes-list'>
+                        <%= render 'clients/notes', notes: @lead.notes.order(created_at: :desc) %>
                       </div>
-                      <div class="mb-3">
-                        <%= form.submit "Save", class: "btn btn-primary" %>
-                      </div>
+                    </div>
+                  </div>
+                  <!-- End sidebar recent posts-->
+                </div>
+              </div>
+              <div class="tab-pane fade pt-3" id="lead-activities">
+                <div class='d-flex justify-content-between align-items-center'>
+                  <h1><%= @lead.name %> Activities</h1>
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalLong">
+                    New Activity
+                  </button>
+                </div>
+                <div class='row scrollable-div' style="max-height: 65vh; overflow-y: auto; border: 1px solid #ddd; padding: 10px;">
+                  <div id="activities-list" class='col-12' data-controller="activities">
+                    <%= render partial: 'activities/activities_list', locals: {activities: @lead.activities} %>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane fade pt-3" id="lead-calendar">
+                <div class='row scrollable-div' style="max-height: 65vh; overflow-y: auto; border: 1px solid #ddd; padding: 10px;">
+                  <div class='col-12'>
+                    <%= month_calendar(events: @lead.activities, attribute: :date) do |date, activities| %>
+                      <%= date.day %>
+                      <br>
+                      <br>
+                      <span class="btn btn-success"><%= activities.count %></span>
                     <% end %>
                   </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+              </div>
+              <!-- Modal -->
+              <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLongTitle">New Activity</h5>
+                    </div>
+                    <div class="modal-body">
+                      <%= form_with(model: Activity.new, url: activities_path(format: :js), method: 'post', id: 'lead-activity-form') do |form| %>
+                        <div class="mb-3">
+                          <%= form.label :date, class: "form-label" %>
+                          <%= form.date_field :date, class: "form-control" %>
+                        </div>
+                        <div class="mb-3">
+                          <%= form.label :to_do, class: "form-label" %>
+                          <%= form.text_field :to_do, class: "form-control" %>
+                        </div>
+                        <div class="mb-3">
+                          <%= form.hidden_field :assignee_type, value: 'Lead' %>
+                          <%= form.hidden_field :assignee_id, value: @lead.id %>
+                          <div class="row">
+                            <div class="col-lg-3 col-md-4 label ">Lead</div>
+                            <div class="col-lg-9 col-md-8"><%= @lead.name %></div>
+                          </div>
+                        </div>
+                        <div class="mb-3">
+                          <%= form.label :priority, class: "form-label" %>
+                          <%= form.select :priority, options_for_select([ 'Regular','High', 'Urgent']), class: "form-control" %>
+                        </div>
+                        <div class="mb-3">
+                          <%= form.submit "Save", class: "btn btn-primary" %>
+                        </div>
+                      <% end %>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
+            <!-- End Bordered Tabs -->
           </div>
-          <!-- End Bordered Tabs -->
         </div>
       </div>
-    </div>
-    <div class="col-xl-4">
-      <div class="card">
-        <div class="card-body">
-          <div class="tab-content pt-2">
-            <div class="tab-pane fade show active profile-overview" id="profile-overview">
-              <h5 class="card-title">Profile Details</h5>
-              <div class="row">
-                <div class="col-lg-4 col-md-4 label ">Full Name</div>
-                <div class="col-lg-8 col-md-8"><%= @lead.name%></div>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-lg-4 col-md-4 label">Status</div>
-                <div class="col-lg-8 col-md-8"><%= @lead.status %></div>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-lg-4 col-md-4 label">Amount Owed</div>
-                <div class="col-lg-8 col-md-8">$<%= @lead.amount_owed %></div>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-lg-4 col-md-4 label">Property Sold</div>
-                <div class="col-lg-8 col-md-8"><%= @lead.property_sold %></div>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-lg-4 col-md-4 label">County</div>
-                <div class="col-lg-8 col-md-8"><%= @lead.county %></div>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-lg-4 col-md-4 label">Date Sold</div>
-                <div class="col-lg-8 col-md-8"><%= @lead.date_sold %></div>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-lg-4 col-md-4 label">Mortgage Company</div>
-                <div class="col-lg-8 col-md-8"><%= @lead.mortgage_company %></div>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-lg-4 col-md-4 label">Initial Bid Amount</div>
-                <div class="col-lg-8 col-md-8"><%= @lead.initial_bid_amount %></div>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-lg-4 col-md-4 label">Sold Amount</div>
-                <div class="col-lg-8 col-md-8"><%= @lead.sold_amount %></div>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-lg-4 col-md-4 label">Lawsuit #</div>
-                <div class="col-lg-8 col-md-8"><%= @lead.lawsuit_no %></div>
-              </div>
-              <hr>
-              <hr>
-              <div class='d-flex justify-content-center align-items-center'>
-                <%= link_to "Edit", edit_lead_path(@lead), class: 'btn btn-success' %> |
-                <%= link_to "Back to leads", leads_path, class: 'btn btn-info' %> |
-                <%= button_to "Delete", @lead, method: :delete, class: 'btn btn-danger' %>
+      <div class="col-xl-4">
+        <div class="card">
+          <div class="card-body">
+            <div class="tab-content pt-2">
+              <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                <h5 class="card-title">Profile Details</h5>
+                <div class="row">
+                  <div class="col-lg-4 col-md-4 label ">Full Name</div>
+                  <div class="col-lg-8 col-md-8"><%= @lead.name%></div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-lg-4 col-md-4 label">Status</div>
+                  <div class="col-lg-8 col-md-8"><%= @lead.status %></div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-lg-4 col-md-4 label">Amount Owed</div>
+                  <div class="col-lg-8 col-md-8">$<%= @lead.amount_owed %></div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-lg-4 col-md-4 label">Property Sold</div>
+                  <div class="col-lg-8 col-md-8"><%= @lead.property_sold %></div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-lg-4 col-md-4 label">County</div>
+                  <div class="col-lg-8 col-md-8"><%= @lead.county %></div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-lg-4 col-md-4 label">Date Sold</div>
+                  <div class="col-lg-8 col-md-8"><%= @lead.date_sold %></div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-lg-4 col-md-4 label">Mortgage Company</div>
+                  <div class="col-lg-8 col-md-8"><%= @lead.mortgage_company %></div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-lg-4 col-md-4 label">Initial Bid Amount</div>
+                  <div class="col-lg-8 col-md-8"><%= @lead.initial_bid_amount %></div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-lg-4 col-md-4 label">Sold Amount</div>
+                  <div class="col-lg-8 col-md-8"><%= @lead.sold_amount %></div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-lg-4 col-md-4 label">Lawsuit #</div>
+                  <div class="col-lg-8 col-md-8"><%= @lead.lawsuit_no %></div>
+                </div>
+                <hr>
+                <hr>
+                <div class='d-flex justify-content-center align-items-center'>
+                  <%= link_to "Edit", edit_lead_path(@lead), class: 'btn btn-success' %> |
+                  <%= link_to "Back to leads", leads_path, class: 'btn btn-info' %> |
+                  <%= button_to "Delete", @lead, method: :delete, class: 'btn btn-danger' %>
+                </div>
               </div>
             </div>
+            <!-- End Bordered Tabs -->
           </div>
-          <!-- End Bordered Tabs -->
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+<% end %>

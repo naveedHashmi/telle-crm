@@ -16,7 +16,7 @@ class ActivitiesController < BaseController
   def new
     @activity = Activity.new
     @leads = Lead.joins(:user).pluck(:name, :id)
-    @clients = Client.joins(:user).pluck(:name, :id)
+    @clients = Client.pluck(:name, :id)
   end
 
   # GET /activities/1/edit
