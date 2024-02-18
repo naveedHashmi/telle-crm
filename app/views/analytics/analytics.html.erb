@@ -1,0 +1,60 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="row">
+      <div class="col-xxl-6 col-md-6">
+        <div class="card info-card revenue-card">
+          <div class="card-body">
+            <h5 class="card-title">Deals Closed</h5>
+            <%= pie_chart @analytics, options: {
+              series: {
+                barWidth: '50%'
+              },
+              tooltip: {
+                valueFormatter: RailsCharts.js("(value) => '$' + Math.round(value)")
+              }
+            } %>
+          </div>
+        </div>
+      </div>
+      <div class="col-xxl-6 col-md-6">
+        <div class="card info-card revenue-card">
+          <div class="card-body">
+            <h5 class="card-title">Commission Pending</span></h5>
+          <%= bar_chart @analytics,
+            class: 'box',
+            theme: 'sakura',
+            options: {
+              series: {
+                barWidth: '50%'
+              },
+              tooltip: {
+                valueFormatter: RailsCharts.js("(value) => '$' + Math.round(value)")
+              }
+            }
+          %>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Commission Earned</span></h5>
+        <%= line_chart @analytics,
+          class: 'box',
+          options: {
+            title: {
+              text: "Commission Earned for past 12 months",
+              left: 'center'
+            },
+            tooltip: {
+              valueFormatter: RailsCharts.js("(value) => '$' + Math.round(value)")
+            }
+          }
+        %>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>

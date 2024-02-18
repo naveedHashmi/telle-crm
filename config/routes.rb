@@ -32,5 +32,6 @@ Rails.application.routes.draw do
 
   resources :users
 
+  get '/analytics', to: 'analytics#analytics'
   root 'clients#index'
 end
