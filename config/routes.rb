@@ -24,6 +24,8 @@ Rails.application.routes.draw do
       get :upload_csv
       post :process_csv
       post :mappings
+      post :change_assignee
+      post :index
     end
   end
 

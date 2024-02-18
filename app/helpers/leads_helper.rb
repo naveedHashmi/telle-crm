@@ -27,4 +27,8 @@ module LeadsHelper
   def lead_users_select_options
     User.pluck(Arel.sql("CONCAT(first_name, ' ', last_name) AS full_name"), :id).reject { |user| user.first.blank? }
   end
+
+  def lead_options
+    Lead.ids
+  end
 end

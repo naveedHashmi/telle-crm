@@ -8,6 +8,7 @@ class User < ApplicationRecord
   belongs_to :userable, polymorphic: true, optional: true
 
   has_many :clients
+  has_many :leads
 
   validate :name, prepend: true
 end

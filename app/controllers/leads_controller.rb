@@ -105,6 +105,11 @@ class LeadsController < BaseController
     redirect_to leads_url
   end
 
+  def change_assignee
+    Lead.where(id: params[:lead_ids]).update_all(user_id: params[:assignee_id])
+    @leads = current_user.leads
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

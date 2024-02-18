@@ -19,15 +19,7 @@ export default class extends Controller {
   }
 
   submit_leads_users_filter_form(e) {
-      e.preventDefault();
-
-      let dropdownValue = $('#filter_user_id').val()
-
-      $.ajax({
-        type: 'GET',
-        url: '/leads.js',
-        data: {'filter[user_id]': dropdownValue}
-      });
+    $("#leads_users_filter_form").submit()
   }
 
   submit_mapping_form(e) {
@@ -37,4 +29,26 @@ export default class extends Controller {
     form.attr('id', 'file-process-form');
   }
 
+  select_all_leads(e) {
+    if (e.target.checked) {
+      $('.lead-checkbox:not(:checked)').each(function (index, checkbox) {
+        $(checkbox).prop('checked', true);
+      });
+    } else {
+      $('.lead-checkbox').each(function (index, checkbox) {
+        $(checkbox).prop('checked', false);
+      });
+    }
+  }
+
+  assign_selected_users() {
+    const leadIds = $('.lead-checkbox:checked').map((index, checkbox) => $(checkbox).val()).get();
+
+    $("#lead_ids").val(leadIds)
+  }
+
+  toggleModel() {
+    $(".modal-backdrop").toggle();
+    $("#lead-assignee-change").toggle()
+  }
 }

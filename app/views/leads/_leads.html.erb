@@ -1,6 +1,7 @@
 <table class="table table-hover">
   <thead>
     <tr>
+      <th scope="col"> <%= check_box_tag 'select_all_leads', nil, nil, data: { action: 'change->leads#select_all_leads' } %></th>
       <th scope="col">Name</th>
       <th scope="col">Status</th>
       <th scope="col">Lawsuit #</th>

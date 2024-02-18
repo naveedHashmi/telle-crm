@@ -1,4 +1,5 @@
 <tr id="<% dom_id lead %>">
+  <td> <%= check_box_tag "lead-#{lead.id}", lead.id, false,  id:"checkbox-#{lead.id.to_s}", class:'lead-checkbox', "data-lead-id": lead.id %></td>
   <td scope="row"><%= lead.name %></td>
   <td><%= lead.status %></td>
   <td><%= lead.lawsuit_no %></td>
