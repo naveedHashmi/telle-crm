@@ -12,4 +12,8 @@ module ClientsHelper
   def client_options
     Client.ids
   end
+
+  def client_dropdown_options
+    Client.pluck(:name, :id)
+  end
 end

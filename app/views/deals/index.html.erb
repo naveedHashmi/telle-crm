@@ -1,0 +1,25 @@
+<div data-controller="deals">
+  <div class='d-flex justify-content-between align-items-center'>
+    <div class='col-4'>
+      <div class='d-flex justify-content-between align-items-center'>
+        <div class='col-5'>
+          <h1>Deals</h1>
+        </div>
+        <div class='col-6'>
+          <%= form_with(url: deals_path, id: 'deal_status_filter_form', method: 'GET', data: { turbo_frame: 'deals' }) do |form| %>
+            <div class='d-flex justify-content-between align-items-center'>
+              <h5>Status: </h5>
+              <%= select_tag 'filter[status]', options_for_select(deal_statuses, params.dig('filter', 'status')), class: "form-control", data: { action: 'change->deals#filter_deals' } %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div>
+      <%= link_to "New deal", new_deal_path, class: 'btn btn-primary' %>
+    </div>
+  </div>
+  <div id="deals">
+    <%= render 'deals_list', deals: @deals %>
+  </div>
+</div>

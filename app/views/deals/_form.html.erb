@@ -1,0 +1,39 @@
+<%= form_with(model: deal, class: "needs-validation", novalidate: true) do |form| %>
+  <% if deal.errors.any? %>
+    <div class="alert alert-danger">
+      <h2><%= pluralize(deal.errors.count, "error") %> prohibited this deal from being saved:</h2>
+      <ul>
+        <% deal.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="mb-3">
+    <%= form.label :claim_no, class: "form-label" %>
+    <%= form.text_field :claim_no, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :amount_owed, class: "form-label" %>
+    <%= form.text_field :amount_owed, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :fee_percent, class: "form-label" %>
+    <%= form.text_field :fee_percent, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :status, class: "form-label" %>
+    <%= form.select :status, options_for_select(deal_statuses), class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :expected_commission, class: "form-label" %>
+    <%= form.text_field :expected_commission, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :client_id, class: "form-label" %>
+    <%= form.select :client_id, options_for_select(client_dropdown_options), class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= form.submit "Save", class: "btn btn-primary" %>
+  </div>
+<% end %>
