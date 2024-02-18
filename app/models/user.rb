@@ -7,5 +7,7 @@ class User < ApplicationRecord
          :recoverable
   belongs_to :userable, polymorphic: true, optional: true
 
+  has_many :clients
+
   validate :name, prepend: true
 end

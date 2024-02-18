@@ -19,14 +19,14 @@ export default class extends Controller {
   }
 
   submit_leads_users_filter_form(e) {
-    e.preventDefault();
+      e.preventDefault();
 
-    let dropdownValue = $('#filter_user_id').val()
+      let dropdownValue = $('#filter_user_id').val()
 
-    $.ajax({
-      type: 'GET',
-      url: '/leads.js',
-      data: {'filter[user_id]': dropdownValue}
+      $.ajax({
+        type: 'GET',
+        url: '/leads.js',
+        data: {'filter[user_id]': dropdownValue}
       });
   }
 

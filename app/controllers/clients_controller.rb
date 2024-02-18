@@ -5,7 +5,7 @@ class ClientsController < BaseController
 
   # GET /clients or /clients.json
   def index
-    @clients = Client.all
+    @clients = Client.custom_filter(filter_params)
   end
 
   # GET /clients/1 or /clients/1.json
@@ -60,6 +60,11 @@ class ClientsController < BaseController
     end
   end
 
+  def change_assignee
+    Client.where(id: params[:client_ids]).update_all(user_id: params[:assignee_id])
+    @clients = current_user.clients
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -70,5 +75,9 @@ class ClientsController < BaseController
   # Only allow a list of trusted parameters through.
   def client_params
     params.require(:client).permit(:phone, :amount_owed, :lawsuit_no, :address, :claim_no, :name, :email)
+  end
+
+  def filter_params
+    params['filter'] || {}
   end
 end

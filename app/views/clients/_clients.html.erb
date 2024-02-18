@@ -1,0 +1,21 @@
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col"> <%= check_box_tag 'select_all_clients', nil, nil, data: { action: 'change->clients#select_all_clients' } %></th>
+      <th scope="col">Name</th>
+      <th scope="col">Amount Owed</th>
+      <th scope="col">Claim #</th>
+      <th scope="col">Lawsuit #</th>
+      <th scope="col">Phone #</th>
+      <th scope="col">Address</th>
+      <th scope="col">Email</th>
+      <th scope="col">Owner or Heir</th>
+      <th scope="col">View Profile</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% clients.each do |client| %>
+      <%= render client %>
+    <% end %>
+  </tbody>
+</table>

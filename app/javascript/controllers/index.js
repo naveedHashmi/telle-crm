@@ -6,5 +6,7 @@ import { application } from "./application"
 
 import ActivitiesController from "./activities_controller"
 import LeadsController from "./leads_controller"
+import ClientsController from "./clients_controller"
 application.register("activities", ActivitiesController)
 application.register("leads", LeadsController)
+application.register("clients", ClientsController)

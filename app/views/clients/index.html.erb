@@ -1,27 +1,47 @@
-<p style="color: green"><%= notice %></p>
-<div class='d-flex justify-content-between align-items-center'>
-  <h1>Clients</h1>
-  <%= link_to "New client", new_client_path, class: 'btn btn-primary' %>
-</div>
-<div id="clients">
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <th scope="col">Name</th>
-        <th scope="col">Amount Owed</th>
-        <th scope="col">Claim #</th>
-        <th scope="col">Lawsuit #</th>
-        <th scope="col">Phone #</th>
-        <th scope="col">Address</th>
-        <th scope="col">Email</th>
-        <th scope="col">Owner or Heir</th>
-        <th scope="col">View Profile</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @clients.each do |client| %>
-        <%= render client %>
+<div data-controller="clients">
+  <div class='d-flex justify-content-between align-items-center'>
+    <div class='col-4 d-flex justify-content-between align-items-center'>
+      <h1>Clients</h1>
+      <%= form_with(url: clients_path, id: 'clients_users_filter_form', method: 'POST') do |form| %>
+        <div class='d-flex justify-content-between align-items-center'>
+          <h5>Users: </h5>
+          <%= select_tag 'filter[user_id]', options_for_select(client_users_options, params.dig('filter', 'user_id')), class: "form-control", data: { action: 'change->clients#submit_clients_users_filter_form' } %>
+        </div>
       <% end %>
-    </tbody>
-  </table>
+    </div>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#client-assignee-change" , data-action= 'click->clients#assign_selected_users' >
+      Change Assignee
+    </button>
+    <%= link_to "New client", new_client_path, class: 'btn btn-primary' %>
+  </div>
+  <div id="clients">
+    <%= render 'clients', clients: @clients %>
+  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="client-assignee-change" tabindex="-1" role="dialog" aria-labelledby="client-assignee-changeTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Change clent Assignee</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <%= form_with(url: change_assignee_clients_path, id: 'assignee_form', method: 'POST', data: {action: 'turbo:submit-end->clients#toggleModel'}) do |form| %>
+            <div class='d-flex justify-content-between align-items-center'>
+              <h5>Users: </h5>
+              <%= form.select 'assignee_id', options_for_select(client_users_select_options, params.dig('assignee_id')), class: "form-control" %>
+              <%= form.select :client_ids, client_options, {}, {multiple: true, class: 'd-none'} %>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <%= form.submit 'Change', class:"btn btn-primary"%>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

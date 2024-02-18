@@ -8,4 +8,8 @@ module ClientsHelper
   def client_users_select_options
     User.pluck(:name, :id).reject { |user| user.first.blank? }
   end
+
+  def client_options
+    Client.ids
+  end
 end

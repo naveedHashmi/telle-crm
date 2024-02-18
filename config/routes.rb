@@ -3,7 +3,14 @@
 Rails.application.routes.draw do
   devise_for :users
 
-  resources :labels, :notes, :clients
+  resources :labels, :notes
+
+  resources :clients do
+    collection do
+      post :change_assignee
+      post :index
+    end
+  end
 
   resources :activities do
     member do
