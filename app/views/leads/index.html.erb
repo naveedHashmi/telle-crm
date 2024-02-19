@@ -52,7 +52,7 @@
           </div>
         </div>
         <div class='col-4 justify-content-between align-items-center'>
-          <%= form_with(url: leads_path, id: 'leads_users_filter_form', method: 'POST') do |form| %>
+          <%= form_with(url: leads_path, id: 'leads_users_filter_form', method: 'GET') do |form| %>
             <div class='d-flex justify-content-between align-items-center'>
               <h5>Users: </h5>
               <%= select_tag 'filter[user_id]', options_for_select(lead_users_options, params.dig('filter', 'user_id')), class: "form-control", data: { action: 'change->leads#submit_leads_users_filter_form' } %>
@@ -135,7 +135,7 @@
 
       $.ajax({
         type: "GET",
-        url: `${window.location.href}.js`,
+        url: `${window.location.pathname}.js`,
         data: { label_id: e.target.value },
         error: function (error) {
           console.error("Error:", error);

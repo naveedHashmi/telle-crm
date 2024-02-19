@@ -22,16 +22,12 @@ class ClientsController < BaseController
   # POST /clients or /clients.json
 
   def create
-    ActiveRecord::Base.transaction do
-      @client = Client.new(client_params)
+    @client = Client.new(client_params)
 
-      if @client.save
-        @user = User.create!(user_params.merge(userable: @client))
-
-        redirect_to clients_path, notice: 'Client successfully created.'
-      else
-        render :new
-      end
+    if @client.save
+      @clients = Client.custom_filter(filter_params)
+    else
+      render :new
     end
   end
 
@@ -74,7 +70,7 @@ class ClientsController < BaseController
 
   # Only allow a list of trusted parameters through.
   def client_params
-    params.require(:client).permit(:phone, :amount_owed, :lawsuit_no, :address, :claim_no, :name, :email)
+    params.require(:client).permit(:phone, :amount_owed, :lawsuit_no, :address, :claim_no, :name, :email, :user_id)
   end
 
   def filter_params

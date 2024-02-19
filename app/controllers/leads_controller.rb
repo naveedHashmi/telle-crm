@@ -28,7 +28,7 @@ class LeadsController < BaseController
     @lead = Lead.new(lead_params)
 
     if @lead.save
-      redirect_to leads_path, notice: 'Client successfully created.'
+      @leads = Lead.all
     else
       render :new
     end

@@ -9,7 +9,6 @@ Rails.application.routes.draw do
   resources :clients do
     collection do
       post :change_assignee
-      post :index
     end
   end
 
@@ -26,7 +25,6 @@ Rails.application.routes.draw do
       post :process_csv
       post :mappings
       post :change_assignee
-      post :index
     end
   end
 

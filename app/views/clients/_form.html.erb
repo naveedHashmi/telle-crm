@@ -18,6 +18,10 @@
     <%= form.text_field :email, class: "form-control" %>
   </div>
   <div class="mb-3">
+    <%= form.label :manager, class: "form-label" %>
+    <%= form.select :user_id, options_for_select(client_users_select_options), class: "form-control" %>
+  </div>
+  <div class="mb-3">
     <%= form.label :phone, class: "form-label" %>
     <%= form.text_field :phone, class: "form-control" %>
   </div>
