@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class DealsController < BaseController
   before_action :set_deal, only: %i[show edit update destroy]
 

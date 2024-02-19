@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class DealService
   def self.analytics_data
     time_periods = [30, 60, 90]
