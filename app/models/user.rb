@@ -5,6 +5,8 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable,
          :recoverable
+  enum role: { admin: 0, super_admin: 1 }
+
   belongs_to :userable, polymorphic: true, optional: true
 
   has_many :clients
