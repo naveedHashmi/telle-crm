@@ -19,7 +19,20 @@
       <%= link_to "New deal", new_deal_path, class: 'btn btn-primary' %>
     </div>
   </div>
-  <div id="deals">
-    <%= render 'deals_list', deals: @deals %>
+  <div id="deals" class="  text-secondary container-fluid min-vh-100 d-flex flex-column">
+    <div class="row flex-nowrap overflow-auto flex-grow-1">
+      <% deal_statuses.each do |key| %>
+        <div class="col-2 d-flex flex-column">
+          <div class="card card-margin mb-2 deal-card flex-grow-1">
+            <div class="card-header no-border <%= board_colors[key][:bg_color] %> <%= board_colors[key][:text_color] %>">
+              <small class="card-title mt-0 task-header text-uppercase"><%= key.humanize %>(<%= @deals_group[key] %>)</small>
+            </div>
+            <div class="card-body p-1 kanban-column" data-status="<%= key %>" data-controller="kanban" data-bgcolor="<%= board_colors[key][:bg_color] %>" data-textcolor="<%= board_colors[key][:text_color] %>">
+              <%= render 'deals_list', deals: @deals[key], bgcolor: board_colors[key][:bg_color], textColor: board_colors[key][:text_color] %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
   </div>
 </div>

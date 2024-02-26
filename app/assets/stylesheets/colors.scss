@@ -1,0 +1,716 @@
+$red: #df1125;
+$orange: #fc4e12;
+$cream: #ffe0ab;
+$blue: #1ea5fc;
+$purple: #8962f8;
+$storm-gray: #578887;
+$soft-white: #d8c9af;
+
+$neon-pink: #fb212f;
+$clementine: #fd513b;
+$mellow-yellow: #f7f6af;
+$light-blue: #5ebad9;
+$ultra-violet: #5f41b2;
+$cactus: #5b7971;
+$antique-white: #cda986;
+
+$electric-pink: #fc3644;
+$apricot: #fc5c42;
+$canary-yellow: #ffda3a;
+$cerulian: #87b9e7;
+$lilac: #a990dd;
+$pine-green: #4e6c54;
+$yellow-gold: #cc996d;
+
+$hibiscus: #fb0049;
+$papaya: #fd7036;
+$pollen: #fecb4d;
+$surf-blue: #1871ac;
+$ocean-blue: #6273bd;
+$cyprus-green: #cda986;
+$gold: #b08053;
+
+$pink: #fd4154;
+$kumquat: #fd7441;
+$yellow: #e8c511;
+$pacific-green: #0f6d8e;
+$delft-blue: #4662b2;
+$northern-blue: #638a8d;
+$camel: #a97d4f;
+
+$pink-citrus: #ea383a;
+$light-orange: #fd820b;
+$flash-light: #faed0b;
+$blue-cobalt: #3a6b8e;
+$indigo: #474e95;
+$azure: #788991;
+$walnut: #a17455;
+
+$dragon-fruit: #f12e6d;
+$peach: #e0694e;
+$lemon-cream: #ffeb6d;
+$dark-teal: #2c6184;
+$lavender-gray: #757397;
+$mist-blue: #A7AB99;
+$stone: #a28872;
+
+$pomagranate: #d80e4f;
+$flamingo: #ca6f59;
+$flash: #dff81e;
+$blue-horizon: #1e538f;
+$lavender: #a58998;
+$dark-olive: #7c7a66;
+$pebble: #9f8d7e;
+
+$camellia: #bf3138;
+$rose-gold: #E99475;
+$green: #80e220;
+$denim-blue: #4b709a;
+$cocoa: #8b7d7d;
+$khaki: #7a6e49;
+$coastal-gray: #715d50;
+
+$red-rose: #ab1438;
+$pink-sand: #feb69c;
+$spearmint: #77ea7e;
+$linen-blue: #455785;
+
+$plum: #81323d;
+$light-pink: #f19f9d;
+$mint: #a2ec8e;
+$alaskan-blue: #525c73;
+
+$vintage-rose: #f29c98;
+$beryl: #d0f2b1;
+$deep-navy: #3a4565;
+
+$grapefruit: #fda27e;
+$sea-foam: #cff1d6;
+$midnight-blue: #383b65;
+
+$turquoise: #91cec2;
+
+.text-red {
+  color: $red;
+}
+
+.text-orange {
+  color: $orange;
+}
+
+.text-cream {
+  color: $cream;
+}
+
+.text-blue {
+  color: $blue;
+}
+
+.text-purple {
+  color: $purple;
+}
+
+.text-storm-gray {
+  color: $storm-gray;
+}
+
+.text-soft-white {
+  color: $soft-white;
+}
+
+.text-neon-pink {
+  color: $neon-pink;
+}
+
+.text-clementine {
+  color: $clementine;
+}
+
+.text-mellow-yellow {
+  color: $mellow-yellow;
+}
+
+.text-light-blue {
+  color: $light-blue;
+}
+
+.text-ultra-violet {
+  color: $ultra-violet;
+}
+
+.text-cactus {
+  color: $cactus;
+}
+
+.text-antique-white {
+  color: $antique-white;
+}
+
+.text-electric-pink {
+  color: $electric-pink;
+}
+
+.text-apricot {
+  color: $apricot;
+}
+
+.text-canary-yellow {
+  color: $canary-yellow;
+}
+
+.text-cerulian {
+  color: $cerulian;
+}
+
+.text-lilac {
+  color: $lilac;
+}
+
+.text-pine-green {
+  color: $pine-green;
+}
+
+.text-yellow-gold {
+  color: $yellow-gold;
+}
+
+.text-hibiscus {
+  color: $hibiscus;
+}
+
+.text-papaya {
+  color: $papaya;
+}
+
+.text-pollen {
+  color: $pollen;
+}
+
+.text-surf-blue {
+  color: $surf-blue;
+}
+
+.text-ocean-blue {
+  color: $ocean-blue;
+}
+
+.text-cyprus-green {
+  color: $cyprus-green;
+}
+
+.text-gold {
+  color: $gold;
+}
+
+.text-pink {
+  color: $pink;
+}
+
+.text-kumquat {
+  color: $kumquat;
+}
+
+.text-yellow {
+  color: $yellow;
+}
+
+.text-pacific-green {
+  color: $pacific-green;
+}
+
+.text-delft-blue {
+  color: $delft-blue;
+}
+
+.text-northern-blue {
+  color: $northern-blue;
+}
+
+.text-camel {
+  color: $camel;
+}
+
+.text-pink-citrus {
+  color: $pink-citrus;
+}
+
+.text-light-orange {
+  color: $light-orange;
+}
+
+.text-flash-light {
+  color: $flash-light;
+}
+
+.text-blue-cobalt {
+  color: $blue-cobalt;
+}
+
+.text-indigo {
+  color: $indigo;
+}
+
+.text-azure {
+  color: $azure;
+}
+
+.text-walnut {
+  color: $walnut;
+}
+
+.text-dragon-fruit {
+  color: $dragon-fruit;
+}
+
+.text-peach {
+  color: $peach;
+}
+
+.text-lemon-cream {
+  color: $lemon-cream;
+}
+
+.text-dark-teal {
+  color: $dark-teal;
+}
+
+.text-lavender-gray {
+  color: $lavender-gray;
+}
+
+.text-mist-blue {
+  color: $mist-blue;
+}
+
+.text-stone {
+  color: $stone;
+}
+
+.text-pomagranate {
+  color: $pomagranate;
+}
+
+.text-flamingo {
+  color: $flamingo;
+}
+
+.text-flash {
+  color: $flash;
+}
+
+.text-blue-horizon {
+  color: $blue-horizon;
+}
+
+.text-lavender {
+  color: $lavender;
+}
+
+.text-dark-olive {
+  color: $dark-olive;
+}
+
+.text-pebble {
+  color: $pebble;
+}
+
+.text-camellia {
+  color: $camellia;
+}
+
+.text-rose-gold {
+  color: $rose-gold;
+}
+
+.text-green {
+  color: $green;
+}
+
+.text-denim-blue {
+  color: $denim-blue;
+}
+
+.text-cocoa {
+  color: $cocoa;
+}
+
+.text-khaki {
+  color: $khaki;
+}
+
+.text-coastal-gray {
+  color: $coastal-gray;
+}
+
+.text-red-rose {
+  color: $red-rose;
+}
+
+.text-pink-sand {
+  color: $pink-sand;
+}
+
+.text-spearmint {
+  color: $spearmint;
+}
+
+.text-linen-blue {
+  color: $linen-blue;
+}
+
+.text-plum {
+  color: $plum;
+}
+
+.text-light-pink {
+  color: $light-pink;
+}
+
+.text-mint {
+  color: $mint;
+}
+
+.text-alaskan-blue {
+  color: $alaskan-blue;
+}
+
+.text-vintage-rose {
+  color: $vintage-rose;
+}
+
+.text-beryl {
+  color: $beryl;
+}
+
+.text-deep-navy {
+  color: $deep-navy;
+}
+
+.text-grapefruit {
+  color: $grapefruit;
+}
+
+.text-sea-foam {
+  color: $sea-foam;
+}
+
+.text-midnight-blue {
+  color: $midnight-blue;
+}
+
+.text-turquoise {
+  color: $turquoise;
+}
+
+
+.bg-red {
+  background-color: $red;
+}
+
+.bg-orange {
+  background-color: $orange;
+}
+
+.bg-cream {
+  background-color: $cream;
+}
+
+.bg-blue {
+  background-color: $blue;
+}
+
+.bg-purple {
+  background-color: $purple;
+}
+
+.bg-storm-gray {
+  background-color: $storm-gray;
+}
+
+.bg-soft-white {
+  background-color: $soft-white;
+}
+
+.bg-neon-pink {
+  background-color: $neon-pink;
+}
+
+.bg-clementine {
+  background-color: $clementine;
+}
+
+.bg-mellow-yellow {
+  background-color: $mellow-yellow;
+}
+
+.bg-light-blue {
+  background-color: $light-blue;
+}
+
+.bg-ultra-violet {
+  background-color: $ultra-violet;
+}
+
+.bg-cactus {
+  background-color: $cactus;
+}
+
+.bg-antique-white {
+  background-color: $antique-white;
+}
+
+.bg-electric-pink {
+  background-color: $electric-pink;
+}
+
+.bg-apricot {
+  background-color: $apricot;
+}
+
+.bg-canary-yellow {
+  background-color: $canary-yellow;
+}
+
+.bg-cerulian {
+  background-color: $cerulian;
+}
+
+.bg-lilac {
+  background-color: $lilac;
+}
+
+.bg-pine-green {
+  background-color: $pine-green;
+}
+
+.bg-yellow-gold {
+  background-color: $yellow-gold;
+}
+
+.bg-hibiscus {
+  background-color: $hibiscus;
+}
+
+.bg-papaya {
+  background-color: $papaya;
+}
+
+.bg-pollen {
+  background-color: $pollen;
+}
+
+.bg-surf-blue {
+  background-color: $surf-blue;
+}
+
+.bg-ocean-blue {
+  background-color: $ocean-blue;
+}
+
+.bg-cyprus-green {
+  background-color: $cyprus-green;
+}
+
+.bg-gold {
+  background-color: $gold;
+}
+
+.bg-pink {
+  background-color: $pink;
+}
+
+.bg-kumquat {
+  background-color: $kumquat;
+}
+
+.bg-yellow {
+  background-color: $yellow;
+}
+
+.bg-pacific-green {
+  background-color: $pacific-green;
+}
+
+.bg-delft-blue {
+  background-color: $delft-blue;
+}
+
+.bg-northern-blue {
+  background-color: $northern-blue;
+}
+
+.bg-camel {
+  background-color: $camel;
+}
+
+.bg-pink-citrus {
+  background-color: $pink-citrus;
+}
+
+.bg-light-orange {
+  background-color: $light-orange;
+}
+
+.bg-flash-light {
+  background-color: $flash-light;
+}
+
+.bg-blue-cobalt {
+  background-color: $blue-cobalt;
+}
+
+.bg-indigo {
+  background-color: $indigo;
+}
+
+.bg-azure {
+  background-color: $azure;
+}
+
+.bg-walnut {
+  background-color: $walnut;
+}
+
+.bg-dragon-fruit {
+  background-color: $dragon-fruit;
+}
+
+.bg-peach {
+  background-color: $peach;
+}
+
+.bg-lemon-cream {
+  background-color: $lemon-cream;
+}
+
+.bg-dark-teal {
+  background-color: $dark-teal;
+}
+
+.bg-lavender-gray {
+  background-color: $lavender-gray;
+}
+
+.bg-mist-blue {
+  background-color: $mist-blue;
+}
+
+.bg-stone {
+  background-color: $stone;
+}
+
+.bg-pomagranate {
+  background-color: $pomagranate;
+}
+
+.bg-flamingo {
+  background-color: $flamingo;
+}
+
+.bg-flash {
+  background-color: $flash;
+}
+
+.bg-blue-horizon {
+  background-color: $blue-horizon;
+}
+
+.bg-lavender {
+  background-color: $lavender;
+}
+
+.bg-dark-olive {
+  background-color: $dark-olive;
+}
+
+.bg-pebble {
+  background-color: $pebble;
+}
+
+.bg-camellia {
+  background-color: $camellia;
+}
+
+.bg-rose-gold {
+  background-color: $rose-gold;
+}
+
+.bg-green {
+  background-color: $green;
+}
+
+.bg-denim-blue {
+  background-color: $denim-blue;
+}
+
+.bg-cocoa {
+  background-color: $cocoa;
+}
+
+.bg-khaki {
+  background-color: $khaki;
+}
+
+.bg-coastal-gray {
+  background-color: $coastal-gray;
+}
+
+.bg-red-rose {
+  background-color: $red-rose;
+}
+
+.bg-pink-sand {
+  background-color: $pink-sand;
+}
+
+.bg-spearmint {
+  background-color: $spearmint;
+}
+
+.bg-linen-blue {
+  background-color: $linen-blue;
+}
+
+.bg-plum {
+  background-color: $plum;
+}
+
+.bg-light-pink {
+  background-color: $light-pink;
+}
+
+.bg-mint {
+  background-color: $mint;
+}
+
+.bg-alaskan-blue {
+  background-color: $alaskan-blue;
+}
+
+.bg-vintage-rose {
+  background-color: $vintage-rose;
+}
+
+.bg-beryl {
+  background-color: $beryl;
+}
+
+.bg-deep-navy {
+  background-color: $deep-navy;
+}
+
+.bg-grapefruit {
+  background-color: $grapefruit;
+}
+
+.bg-sea-foam {
+  background-color: $sea-foam;
+}
+
+.bg-midnight-blue {
+  background-color: $midnight-blue;
+}
+
+.bg-turquoise {
+  background-color: $turquoise;
+}

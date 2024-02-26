@@ -11,6 +11,7 @@ class User < ApplicationRecord
 
   has_many :clients
   has_many :leads
+  has_many :deals, through: :clients
 
   validate :name, prepend: true
 end

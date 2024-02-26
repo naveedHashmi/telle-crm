@@ -5,7 +5,8 @@ class DealsController < BaseController
 
   # GET /deals or /deals.json
   def index
-    @deals = Deal.custom_filter(filter_params)
+    @deals = current_user.deals.custom_filter(filter_params).includes(:client).group_by(&:status)
+    @deals_group = Deal.group(:status).count
   end
 
   # GET /deals/1 or /deals/1.json
@@ -29,6 +30,16 @@ class DealsController < BaseController
       else
         format.html { render :new, status: :unprocessable_entity }
       end
+    end
+  end
+
+  def update_status
+    deal = Deal.find_by(id: params[:id])
+
+    if deal.update(status: params[:status])
+      render json: deal, status: :ok
+    else
+      render json: deal.errors, status: :unprocessable_entity
     end
   end
 
