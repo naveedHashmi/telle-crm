@@ -1,27 +1,80 @@
-<table class='table table-hover'>
-  <thead>
-    <tr>
-      <th>Claim No</th>
-      <th>Amount Owed</th>
-      <th>Fee Percent</th>
-      <th>Status</th>
-      <th>Expected Commission</th>
-      <th>Client</th>
-      <th scope="col">Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% deals.each do |deal| %>
-      <tr>
-        <td><%= deal.claim_no %></td>
-        <td><%= deal.amount_owed %></td>
-        <td><%= deal.fee_percent %></td>
-        <td><%= deal.status.to_s.humanize %></td>
-        <td><%= deal.expected_commission %></td>
-        <td><%= deal.client.name %></td>
-        <td><%= link_to "Edit", edit_deal_path(deal), class: 'btn btn-primary' %></td>
-        <td><%= button_to "Delete", deal, method: :delete, class: 'btn btn-danger' %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<% deals&.each do |deal| %>
+  <div class="card card-margin mb-2 deal-card p-0 <%= bgcolor %> <%= textColor %>" draggable="true" data-deal-id="<%= deal.id %>" >
+    <div class="card-header no-border">
+      <small class="card-title"><%= deal.client.name %></small>
+    </div>
+    <div class="card-body pt-0">
+      Claim #: <%= deal.claim_no %>
+    </div>
+    <div class="card-header no-border bg-white text-blue" data-bs-toggle="modal" data-bs-target="#deal-<%deal.id%>">
+      <small class="card-title">Details</small>
+    </div>
+  </div>
+  <div class="modal fade" id="deal-<%deal.id%>" tabindex="-1" role="dialog" aria-labelledby="deal-<%deal.id%>Title" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header <%= bgcolor %> <%= textColor %>">
+          <h5 class="modal-title" id="deal-<%deal.id%>Title">Deal Details</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-6">
+              Claim No:
+            </div>
+            <div class="col-6">
+              <%= deal.claim_no %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              Amount Owed:
+            </div>
+            <div class="col-6">
+              <%= deal.amount_owed %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              Fee Percent:
+            </div>
+            <div class="col-6">
+              <%= deal.fee_percent %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              Status:
+            </div>
+            <div class="col-6">
+              <%= deal.status.to_s.humanize %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              Expected Commission:
+            </div>
+            <div class="col-4 btn <%= bgcolor %> <%= textColor %>">
+              <%= deal.expected_commission %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              Client:
+            </div>
+            <div class="col-6">
+              <%= deal.client.name %>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer align-items-center">
+          <button type="button" class="btn <%= bgcolor %>" data-bs-dismiss="modal">Close</button>
+          <%= link_to "Edit", edit_deal_path(deal), class: 'btn bg-spearmint' %>
+          <%= button_to "Delete", deal, method: :delete, class: 'btn btn-danger' %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

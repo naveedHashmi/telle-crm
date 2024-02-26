@@ -1,10 +1,14 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  resources :deals
+
   devise_for :users
 
   resources :labels, :notes
+
+  resources :deals do
+    patch 'update_status', on: :member
+  end
 
   resources :clients do
     collection do

@@ -8,7 +8,9 @@ import ActivitiesController from "./activities_controller"
 import LeadsController from "./leads_controller"
 import ClientsController from "./clients_controller"
 import DealsController from "./deals_controller"
+import KanbanController from "./kanban_controller"
 application.register("activities", ActivitiesController)
 application.register("leads", LeadsController)
 application.register("clients", ClientsController)
 application.register("deals", DealsController)
+application.register("kanban", KanbanController)
