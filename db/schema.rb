@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_25_175001) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_26_194807) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -49,7 +49,23 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_25_175001) do
     t.bigint "client_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "included", default: true
     t.index ["client_id"], name: "index_deals_on_client_id"
+  end
+
+  create_table "invoice_queues", force: :cascade do |t|
+    t.string "full_name", default: "", null: false
+    t.string "email", default: "", null: false
+    t.string "full_address", default: "", null: false
+    t.string "phone_no", default: "", null: false
+    t.float "invoice_amount", default: 0.0, null: false
+    t.string "claim_no", default: "", null: false
+    t.bigint "user_id", null: false
+    t.bigint "approved_by_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["approved_by_id"], name: "index_invoice_queues_on_approved_by_id"
+    t.index ["user_id"], name: "index_invoice_queues_on_user_id"
   end
 
   create_table "labels", force: :cascade do |t|
@@ -124,6 +140,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_25_175001) do
 
   add_foreign_key "clients", "users"
   add_foreign_key "deals", "clients"
+  add_foreign_key "invoice_queues", "users"
+  add_foreign_key "invoice_queues", "users", column: "approved_by_id"
   add_foreign_key "leads", "clients"
   add_foreign_key "leads", "labels"
   add_foreign_key "leads", "users"

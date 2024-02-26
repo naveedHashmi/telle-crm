@@ -5,8 +5,9 @@ class DealsController < BaseController
 
   # GET /deals or /deals.json
   def index
-    @deals = current_user.deals.custom_filter(filter_params).includes(:client).group_by(&:status)
-    @deals_group = Deal.group(:status).count
+    client_deals = current_user.deals.custom_filter(filter_params).includes(:client)
+    @deals = client_deals.group_by(&:status)
+    @deals_group = client_deals.group(:status).count
   end
 
   # GET /deals/1 or /deals/1.json
@@ -72,7 +73,8 @@ class DealsController < BaseController
 
   # Only allow a list of trusted parameters through.
   def deal_params
-    params.require(:deal).permit(:claim_no, :amount_owed, :fee_percent, :status, :expected_commission, :client_id)
+    params.require(:deal).permit(:claim_no, :amount_owed, :fee_percent, :status, :expected_commission, :client_id,
+                                 :included)
   end
 
   def filter_params

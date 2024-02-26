@@ -26,6 +26,13 @@ export default class extends Controller {
         });
 
         event.item.classList.add(targetBgColor, targetTextColor);
+
+        const currentElementStatusCount = $(`#${event.item.dataset.status}-count`)
+        const targetElementStatusCount = $(`#${event.to.dataset.status}-count`)
+
+        targetElementStatusCount.text(+targetElementStatusCount.text() + 1)
+        currentElementStatusCount.text(+currentElementStatusCount.text() - 1)
+        event.item.dataset.status = event.to.dataset.status
       },
 
       error: function(error) {

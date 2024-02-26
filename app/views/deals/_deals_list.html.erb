@@ -1,5 +1,5 @@
 <% deals&.each do |deal| %>
-  <div class="card card-margin mb-2 deal-card p-0 <%= bgcolor %> <%= textColor %>" draggable="true" data-deal-id="<%= deal.id %>" >
+  <div class="card card-margin mb-2 deal-card p-0 <%= bgcolor %> <%= textColor %>" draggable="true" data-deal-id="<%= deal.id %>" data-status="<%= status %>" >
     <div class="card-header no-border">
       <small class="card-title"><%= deal.client.name %></small>
     </div>

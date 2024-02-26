@@ -23,7 +23,7 @@
   </div>
   <div class="mb-3">
     <%= form.label :status, class: "form-label" %>
-    <%= form.select :status, options_for_select(deal_statuses), class: "form-control" %>
+    <%= form.select :status, options_for_select(deal_statuses, deal.status), class: "form-control" %>
   </div>
   <div class="mb-3">
     <%= form.label :expected_commission, class: "form-label" %>
@@ -31,7 +31,11 @@
   </div>
   <div class="mb-3">
     <%= form.label :client_id, class: "form-label" %>
-    <%= form.select :client_id, options_for_select(client_dropdown_options), class: "form-control" %>
+    <%= form.select :client_id, options_for_select(client_dropdown_options, deal.client_id), class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :included, class: "form-label" %>
+    <%= form.select :included, options_for_select(boolean_options, deal.included), class: "form-control" %>
   </div>
   <div class="mb-3">
     <%= form.submit "Save", class: "btn btn-primary" %>

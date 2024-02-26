@@ -16,4 +16,8 @@ module ClientsHelper
   def client_dropdown_options
     Client.pluck(:name, :id)
   end
+
+  def boolean_options
+    [['Yes', true], ['No', false]]
+  end
 end

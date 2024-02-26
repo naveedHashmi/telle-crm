@@ -5,8 +5,8 @@ module DealsHelper
     Deal.statuses.keys.map { |key| [key.to_s.humanize, key] }
   end
 
-  def deal_statuses
-    Deal.statuses.keys
+  def deal_status_filters
+    [%i[All All]] + deal_statuses
   end
 
   def board_colors

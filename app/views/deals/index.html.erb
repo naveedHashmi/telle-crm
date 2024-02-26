@@ -9,7 +9,7 @@
           <%= form_with(url: deals_path, id: 'deal_status_filter_form', method: 'GET', data: { turbo_frame: 'deals' }) do |form| %>
             <div class='d-flex justify-content-between align-items-center'>
               <h5>Status: </h5>
-              <%= select_tag 'filter[status]', options_for_select(deal_statuses, params.dig('filter', 'status')), class: "form-control", data: { action: 'change->deals#filter_deals' } %>
+              <%= select_tag 'filter[status]', options_for_select(deal_status_filters, params.dig('filter', 'status')), class: "form-control", data: { action: 'change->deals#filter_deals' } %>
             </div>
           <% end %>
         </div>
@@ -21,14 +21,14 @@
   </div>
   <div id="deals" class="  text-secondary container-fluid min-vh-100 d-flex flex-column">
     <div class="row flex-nowrap overflow-auto flex-grow-1">
-      <% deal_statuses.each do |key| %>
+      <% deal_statuses.each do |_value, key| %>
         <div class="col-2 d-flex flex-column">
           <div class="card card-margin mb-2 deal-card flex-grow-1">
             <div class="card-header no-border <%= board_colors[key][:bg_color] %> <%= board_colors[key][:text_color] %>">
-              <small class="card-title mt-0 task-header text-uppercase"><%= key.humanize %>(<%= @deals_group[key] %>)</small>
+              <small class="card-title mt-0 task-header text-uppercase"><%= key.humanize %>(<span id="<%= key %>-count"><%= @deals_group[key] || 0 %></span>)</small>
             </div>
             <div class="card-body p-1 kanban-column" data-status="<%= key %>" data-controller="kanban" data-bgcolor="<%= board_colors[key][:bg_color] %>" data-textcolor="<%= board_colors[key][:text_color] %>">
-              <%= render 'deals_list', deals: @deals[key], bgcolor: board_colors[key][:bg_color], textColor: board_colors[key][:text_color] %>
+              <%= render 'deals_list', deals: @deals[key], status: key, bgcolor: board_colors[key][:bg_color], textColor: board_colors[key][:text_color] %>
             </div>
           </div>
         </div>
