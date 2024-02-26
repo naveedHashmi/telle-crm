@@ -3,6 +3,8 @@
 class Client < ApplicationRecord
   include Filterable
 
+  belongs_to :user
+
   has_many :activities, as: :assignee, dependent: :destroy
   has_many :notes, as: :noteable, dependent: :destroy
   has_many :deals

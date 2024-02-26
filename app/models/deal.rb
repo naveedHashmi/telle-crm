@@ -15,4 +15,5 @@ class Deal < ApplicationRecord
   validates :expected_commission, presence: true, numericality: { greater_than_or_equal_to: 0 }
 
   scope :filter_by_status, ->(status) { where(status:) }
+  scope :filter_by_user_id, ->(user_id) { joins(client: :user).where(users: { id: user_id }) }
 end
