@@ -12,7 +12,7 @@ module Users
     # POST /resource/sign_in
     def create
       super
-      redirect_to root_path
+      redirect_to root_path(format: :html)
     end
 
     # DELETE /resource/sign_out

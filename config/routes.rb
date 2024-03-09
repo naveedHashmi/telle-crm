@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  resources :users, only: %i[index edit update]
 
   devise_for :users
 
@@ -32,8 +33,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :users
-
   get '/analytics', to: 'analytics#analytics'
+  delete '/sessions/sign_out', to: 'devise/sessions#destroy'
   root 'clients#index'
 end

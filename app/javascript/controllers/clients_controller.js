@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   submit_clients_users_filter_form(e) {
-    $("#clients_users_filter_form").submit()
+    document.getElementById("clients_users_filter_form").requestSubmit()
   }
 
   select_all_clients(e) {
