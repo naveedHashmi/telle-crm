@@ -10,9 +10,11 @@ import ClientsController from "./clients_controller"
 import DealsController from "./deals_controller"
 import KanbanController from "./kanban_controller"
 import AnalyticsController from "./analytics_controller"
+import TurboFrameHistoryController from "./turbo_frame_history_controller"
 application.register("activities", ActivitiesController)
 application.register("leads", LeadsController)
 application.register("clients", ClientsController)
 application.register("deals", DealsController)
 application.register("kanban", KanbanController)
 application.register("analytics", AnalyticsController)
+application.register("history", TurboFrameHistoryController)

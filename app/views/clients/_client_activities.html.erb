@@ -1,0 +1,52 @@
+<div id="profile-settings">
+  <div class='d-flex justify-content-between align-items-center'>
+    <h1><%= @client.name %> Activities</h1>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newActivityModal">
+      New Activity
+    </button>
+  </div>
+  <div class='row scrollable-div' style="max-height: 67vh; overflow-y: auto; border: 1px solid #ddd; padding: 10px;">
+    <div id="activities-list" class='col-12' data-controller="activities">
+      <%= render partial: 'activities/activities_list', locals: {activities: @client.activities} %>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="newActivityModal" tabindex="-1" role="dialog" aria-labelledby="newActivityModalTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="newActivityModalTitle">New Activity</h5>
+      </div>
+      <div class="modal-body">
+        <%= form_with(model: Activity.new, url: activities_path(format: :js), method: 'post', id: 'client-activity-form') do |form| %>
+          <div class="mb-3">
+            <%= form.label :date, class: "form-label" %>
+            <%= form.date_field :date, class: "form-control" %>
+          </div>
+          <div class="mb-3">
+            <%= form.label :to_do, class: "form-label" %>
+            <%= form.text_field :to_do, class: "form-control" %>
+          </div>
+          <div class="mb-3">
+            <%= form.hidden_field :assignee_type, value: 'Client' %>
+            <%= form.hidden_field :assignee_id, value: @client.id %>
+            <div class="row">
+              <div class="col-lg-3 col-md-4 label ">Client</div>
+              <div class="col-lg-9 col-md-8"><%= @client.name %></div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <%= form.label :priority, class: "form-label" %>
+            <%= form.select :priority, options_for_select([ 'Regular','High', 'Urgent']), class: "form-control" %>
+          </div>
+          <div class="mb-3">
+            <%= form.submit "Save", class: "btn btn-primary" %>
+          </div>
+        <% end %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

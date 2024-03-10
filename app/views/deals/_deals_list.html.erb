@@ -6,9 +6,13 @@
     <div class="card-body pt-0">
       Claim #: <%= deal.claim_no %>
     </div>
-    <div class="card-header no-border bg-white text-blue" data-bs-toggle="modal" data-bs-target="#deal-<%= deal.id%>">
-      <small class="card-title">Details</small>
-    </div>
+    <% if params[:detail].present? %>
+      <div class="card-header no-border bg-white text-blue" data-bs-toggle="modal" data-bs-target="#deal-<%= deal.id%>">
+        <small class="card-title">Details</small>
+      </div>
+    <% else %>
+      <%= link_to  'Details', client_path(deal.client.id, partial: 'client_deals', detail: true), class: "card-body pt-0", data: {turbo: false} %>
+    <% end %>
   </div>
   <div class="modal fade" id="deal-<%= deal.id%>" tabindex="-1" role="dialog" aria-labelledby="deal-<%= deal.id%>Title" aria-hidden="true">
     <div class="modal-dialog" role="document">

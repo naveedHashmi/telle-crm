@@ -1,0 +1,12 @@
+<div id="client-calendar">
+  <div class='row scrollable-div' style="max-height: 67vh; overflow-y: auto; border: 1px solid #ddd; padding: 10px;">
+    <div class='col-12'>
+      <%= month_calendar(events: @client.activities, attribute: :date) do |date, activities| %>
+        <%= date.day %>
+        <br>
+        <br>
+        <span class="btn btn-success"><%= activities.count %></span>
+      <% end %>
+    </div>
+  </div>
+</div>

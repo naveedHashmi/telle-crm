@@ -1,0 +1,94 @@
+<div class="tab-content pt-2">
+  <div class="tab-pane fade show active pt-3" id="client-notes" data-controller='notes'>
+    <div class="card-body pb-0">
+      <div class="accordion">
+        <div class="accordion-item">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#add-note" aria-expanded="false" aria-controls="collapseTwo">
+            <div class="post-item clearfix">
+              <a>Add Note</a>
+            </div>
+          </button>
+          <div id="add-note" class="accordion-collapse collapse">
+            <div class="accordion-body">
+              <%= render partial: 'shared/notes_form', locals: { noteable_id: @client.id, noteable_type: 'Client' } %>
+            </div>
+          </div>
+        </div>
+        <div class="scrollable-div" style="max-height: 65vh; overflow-y: auto; border: 1px solid #ddd; padding: 10px;">
+          <%= turbo_frame_tag 'notes-list' do %>
+            <%= render 'notes', notes: @client.notes.order(created_at: :desc) %>
+          <% end %>
+        </div>
+      </div>
+      <!-- End sidebar recent posts-->
+    </div>
+  </div>
+  <div class="tab-pane fade pt-3" id="profile-settings">
+    <div class='d-flex justify-content-between align-items-center'>
+      <h1><%= @client.name %> Activities</h1>
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newActivityModal">
+        New Activity
+      </button>
+    </div>
+    <div class='row scrollable-div' style="max-height: 67vh; overflow-y: auto; border: 1px solid #ddd; padding: 10px;">
+      <div id="activities-list" class='col-12' data-controller="activities">
+        <%= render partial: 'activities/activities_list', locals: {activities: @client.activities} %>
+      </div>
+    </div>
+  </div>
+  <%= turbo_frame_tag 'deals-section', class:"tab-pane fade pt-3"  do%>
+    <%= render partial: 'client_deals'%>
+  <% end %>
+  <!-- Modal -->
+  <div class="modal fade" id="newActivityModal" tabindex="-1" role="dialog" aria-labelledby="newActivityModalTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="newActivityModalTitle">New Activity</h5>
+        </div>
+        <div class="modal-body">
+          <%= form_with(model: Activity.new, url: activities_path(format: :js), method: 'post', id: 'client-activity-form') do |form| %>
+            <div class="mb-3">
+              <%= form.label :date, class: "form-label" %>
+              <%= form.date_field :date, class: "form-control" %>
+            </div>
+            <div class="mb-3">
+              <%= form.label :to_do, class: "form-label" %>
+              <%= form.text_field :to_do, class: "form-control" %>
+            </div>
+            <div class="mb-3">
+              <%= form.hidden_field :assignee_type, value: 'Client' %>
+              <%= form.hidden_field :assignee_id, value: @client.id %>
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label ">Client</div>
+                <div class="col-lg-9 col-md-8"><%= @client.name %></div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <%= form.label :priority, class: "form-label" %>
+              <%= form.select :priority, options_for_select([ 'Regular','High', 'Urgent']), class: "form-control" %>
+            </div>
+            <div class="mb-3">
+              <%= form.submit "Save", class: "btn btn-primary" %>
+            </div>
+          <% end %>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="tab-pane fade pt-3" id="client-calendar">
+    <div class='row scrollable-div' style="max-height: 67vh; overflow-y: auto; border: 1px solid #ddd; padding: 10px;">
+      <div class='col-12'>
+        <%= month_calendar(events: @client.activities, attribute: :date) do |date, activities| %>
+          <%= date.day %>
+          <br>
+          <br>
+          <span class="btn btn-success"><%= activities.count %></span>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
