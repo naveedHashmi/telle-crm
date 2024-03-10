@@ -19,7 +19,7 @@
       <%= link_to "New deal", new_deal_path, class: 'btn btn-primary' %>
     </div>
   </div>
-  <div id="deals" class="  text-secondary container-fluid min-vh-100 d-flex flex-column">
+  <%= turbo_frame_tag "deals-section", class: "text-secondary container-fluid min-vh-100 d-flex flex-column" do %>
     <div class="row flex-nowrap overflow-auto flex-grow-1">
       <% deal_statuses.each do |_value, key| %>
         <div class="col-2 d-flex flex-column">
@@ -27,12 +27,12 @@
             <div class="card-header no-border <%= board_colors[key][:bg_color] %> <%= board_colors[key][:text_color] %>">
               <small class="card-title mt-0 task-header text-uppercase"><%= key.humanize %>(<span id="<%= key %>-count"><%= @deals_group[key] || 0 %></span>)</small>
             </div>
-            <div class="card-body p-1 kanban-column" data-status="<%= key %>" data-controller="kanban" data-bgcolor="<%= board_colors[key][:bg_color] %>" data-textcolor="<%= board_colors[key][:text_color] %>">
-              <%= render 'deals_list', deals: @deals[key], status: key, bgcolor: board_colors[key][:bg_color], textColor: board_colors[key][:text_color] %>
-            </div>
+            <%= turbo_frame_tag key, class: "card-body p-1 kanban-column", data: { status: key, controller: "kanban", bgcolor: board_colors[key][:bg_color], textcolor: board_colors[key][:text_color] } do %>
+              <%= render 'deals/deals_list', deals: @deals[key], status: key, bgcolor: board_colors[key][:bg_color], textColor: board_colors[key][:text_color] %>
+            <% end %>
           </div>
         </div>
       <% end %>
     </div>
-  </div>
+  <% end %>
 </div>

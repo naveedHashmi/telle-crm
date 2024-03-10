@@ -28,6 +28,7 @@ class DealsController < BaseController
     respond_to do |format|
       if @deal.save
         format.html { redirect_to deals_path, notice: 'Deal was successfully created.' }
+        format.turbo_stream
       else
         format.html { render :new, status: :unprocessable_entity }
       end

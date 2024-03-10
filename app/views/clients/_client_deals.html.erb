@@ -1,0 +1,88 @@
+<div data-controller="deals">
+  <div class='d-flex justify-content-between align-items-center'>
+    <div class='col-8'>
+      <div class='d-flex justify-content-between align-items-center'>
+        <div class='col-7'>
+          <h3><%= @client.name %> Deals</h3>
+        </div>
+        <div class='col-5'>
+          <%= form_with(url: client_path(@client), id: 'deal_status_filter_form', method: 'GET', data: { turbo_stream: true }) do |form| %>
+            <div class='d-flex justify-content-between align-items-center'>
+              <h5>Status: </h5>
+              <%= select_tag 'filter[status]', options_for_select(deal_status_filters, params.dig('filter', 'status')), class: "form-control", data: { action: 'change->deals#filter_deals' } %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div>
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newDealModal">
+        New Deal
+      </button>
+    </div>
+  </div>
+  <hr>
+  <div id="deals" class="  text-secondary container-fluid min-vh-100 d-flex flex-column">
+    <div class="row flex-nowrap overflow-auto flex-grow-1">
+      <% deal_statuses.each do |_value, key| %>
+        <div class="col-2 d-flex flex-column">
+          <div class="card card-margin mb-2 deal-card flex-grow-1">
+            <div class="card-header no-border <%= board_colors[key][:bg_color] %> <%= board_colors[key][:text_color] %>">
+              <small class="card-title mt-0 task-header text-uppercase"><%= key.humanize %>(<span id="<%= key %>-count"><%= @deals_group[key] || 0 %></span>)</small>
+            </div>
+            <%= turbo_frame_tag key, class: "card-body p-1 kanban-column", data: { status: key, controller: "kanban", bgcolor: board_colors[key][:bg_color], textcolor: board_colors[key][:text_color] } do %>
+              <%= render 'deals/deals_list', deals: @deals[key], status: key, bgcolor: board_colors[key][:bg_color], textColor: board_colors[key][:text_color] %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="newDealModal" tabindex="-1" role="dialog" aria-labelledby="newDealModalTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="newDealModalTitle">New Deal</h5>
+      </div>
+      <div class="modal-body">
+        <%= form_with(model: Deal.new, url: deals_path, method: 'post', id: 'client-activity-form') do |form| %>
+          <div class="mb-3">
+            <%= form.label :claim_no, class: "form-label" %>
+            <%= form.text_field :claim_no, class: "form-control" %>
+          </div>
+          <div class="mb-3">
+            <%= form.label :amount_owed, class: "form-label" %>
+            <%= form.text_field :amount_owed, class: "form-control" %>
+          </div>
+          <div class="mb-3">
+            <%= form.label :fee_percent, class: "form-label" %>
+            <%= form.text_field :fee_percent, class: "form-control" %>
+          </div>
+          <div class="mb-3">
+            <%= form.label :status, class: "form-label" %>
+            <%= form.select :status, options_for_select(deal_statuses), class: "form-control" %>
+          </div>
+          <div class="mb-3">
+            <%= form.label :expected_commission, class: "form-label" %>
+            <%= form.text_field :expected_commission, class: "form-control" %>
+          </div>
+          <div class="mb-3">
+            <%= form.label :client_id, class: "form-label" %>
+            <%= form.select :client_id, options_for_select([[@client.name, @client.id]]), class: "form-control" %>
+          </div>
+          <div class="mb-3">
+            <%= form.label :included, class: "form-label" %>
+            <%= form.select :included, options_for_select(boolean_options), class: "form-control" %>
+          </div>
+          <div class="mb-3">
+            <%= form.submit "Save", class: "btn btn-primary", 'data-bs-dismiss':"modal" %>
+          </div>
+        <% end %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

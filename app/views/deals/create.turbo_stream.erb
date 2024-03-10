@@ -1,0 +1,1 @@
+<%= turbo_stream.append @deal.status, partial: 'deals/deals_list', locals: {deals: [@deal], status: @deal.status, bgcolor: board_colors[@deal.status][:bg_color], textColor: board_colors[@deal.status][:text_color]} %>

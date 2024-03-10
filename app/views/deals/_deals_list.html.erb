@@ -71,7 +71,7 @@
         </div>
         <div class="modal-footer align-items-center">
           <button type="button" class="btn <%= bgcolor %>" data-bs-dismiss="modal">Close</button>
-          <%= link_to "Edit", edit_deal_path(deal), class: 'btn bg-spearmint' %>
+          <%= link_to "Edit", edit_deal_path(deal), class: 'btn bg-spearmint', data: {turbo: false} %>
           <%= button_to "Delete", deal, method: :delete, class: 'btn btn-danger', data: { turbo_confirm: "Are you sure?" }, 'data-bs-dismiss':"modal" %>
         </div>
       </div>
