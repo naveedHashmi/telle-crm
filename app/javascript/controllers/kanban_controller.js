@@ -16,7 +16,7 @@ export default class extends Controller {
     $.ajax({
       beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
       type: 'PATCH',
-      url: `${'http://localhost:3000'}/deals/${dealId}/update_status`,
+      url: `${window.location.origin}/deals/${dealId}/update_status`,
       data: {status: targetStatus, id: dealId},
       success: function() {
         Array.from(event.item.classList).forEach(className => {

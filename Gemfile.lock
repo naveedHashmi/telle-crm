@@ -164,6 +164,9 @@ GEM
     nokogiri (1.16.0-x86_64-linux)
       racc (~> 1.4)
     orm_adapter (0.5.0)
+    paper_trail (15.1.0)
+      activerecord (>= 6.1)
+      request_store (~> 1.4)
     pg (1.5.4)
     popper_js (2.11.8)
     psych (5.1.2)
@@ -212,6 +215,8 @@ GEM
     regexp_parser (2.9.0)
     reline (0.4.2)
       io-console (~> 0.5)
+    request_store (1.6.0)
+      rack (>= 1.4)
     responders (3.1.1)
       actionpack (>= 5.2)
       railties (>= 5.2)
@@ -286,6 +291,7 @@ DEPENDENCIES
   jquery-rails (~> 4.4)
   jsbundling-rails
   letter_opener
+  paper_trail
   pg (~> 1.1)
   puma (~> 5.0)
   rails (~> 7.0.8)

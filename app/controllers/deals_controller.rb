@@ -2,6 +2,7 @@
 
 class DealsController < BaseController
   before_action :set_deal, only: %i[show edit update destroy]
+  before_action :set_who_dunit, only: %i[update_status]
 
   # GET /deals or /deals.json
   def index

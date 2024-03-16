@@ -3,38 +3,91 @@
     <div class='col-8'>
       <div class='d-flex justify-content-between align-items-center'>
         <div class='col-7'>
-          <h3><%= @client.name %> Deals</h3>
-        </div>
-        <div class='col-5'>
-          <%= form_with(url: client_path(@client), id: 'deal_status_filter_form', method: 'GET', data: { turbo_stream: true }) do |form| %>
-            <div class='d-flex justify-content-between align-items-center'>
-              <h5>Status: </h5>
-              <%= select_tag 'filter[status]', options_for_select(deal_status_filters, params.dig('filter', 'status')), class: "form-control", data: { action: 'change->deals#filter_deals' } %>
-            </div>
-          <% end %>
+          <h3><%= @client.name %> Deal</h3>
         </div>
       </div>
     </div>
     <div>
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newDealModal">
-        New Deal
-      </button>
+      <%if @deal.blank?%>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newDealModal">
+          New Deal
+        </button>
+      <% end %>
     </div>
   </div>
-  <hr>
-  <div id="deals" class="  text-secondary container-fluid min-vh-100 d-flex flex-column">
-    <div class="row flex-nowrap overflow-auto flex-grow-1">
-      <% deal_statuses.each do |_value, key| %>
-        <div class="col-2 d-flex flex-column">
-          <div class="card card-margin mb-2 deal-card flex-grow-1">
-            <div class="card-header no-border <%= board_colors[key][:bg_color] %> <%= board_colors[key][:text_color] %>">
-              <small class="card-title mt-0 task-header text-uppercase"><%= key.humanize %>(<span id="<%= key %>-count"><%= @deals_group[key] || 0 %></span>)</small>
+  <%if @deal%>
+    <hr>
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deal-<%= @deal.id%>Title">Deal Details</h5>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-6">
+              Claim No:
             </div>
-            <%= turbo_frame_tag key, class: "card-body p-1 kanban-column", data: { status: key, controller: "kanban", bgcolor: board_colors[key][:bg_color], textcolor: board_colors[key][:text_color] } do %>
-              <%= render 'deals/deals_list', deals: @deals[key], status: key, bgcolor: board_colors[key][:bg_color], textColor: board_colors[key][:text_color] %>
-            <% end %>
+            <div class="col-6">
+              <%= @deal.claim_no %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              Amount Owed:
+            </div>
+            <div class="col-6">
+              <%= @deal.amount_owed %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              Fee Percent:
+            </div>
+            <div class="col-6">
+              <%= @deal.fee_percent %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              Status:
+            </div>
+            <div class="col-6">
+              <%= @deal.status.to_s.humanize %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              Expected Commission:
+            </div>
+            <div class="col-6">
+              <%= @deal.expected_commission %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              Client:
+            </div>
+            <div class="col-6">
+              <%= @deal.client.name %>
+            </div>
           </div>
         </div>
+        <div class="modal-footer align-items-center">
+          <%= link_to "Edit", edit_deal_path(@deal), class: 'btn bg-spearmint', data: {turbo: false} %>
+          <%= button_to "Delete", @deal, method: :delete, class: 'btn btn-danger', data: { turbo_confirm: "Are you sure?" }, 'data-bs-dismiss':"modal" %>
+        </div>
+      </div>
+    </div>
+  <%end %>
+  <hr>
+  <div class="deal-status-container" data-controller='deals'>
+    <div class="arrow-steps clearfix">
+      <% object = YAML::unsafe_load (@client.deal&.versions&.order(:created_at)&.last&.object_changes || "{}") %>
+      <% last_status = object.key?("status") ? Deal.statuses.invert[object["status"][1]] : 'agreement_start' %>
+      <% current = @client.deal.present? %>
+      <% deal_statuses.each do |value, key| %>
+        <div class="step <%=  current ? 'current' : '' %>" data-action='click->deals#updateStatus' data-id=<%=@deal.id%> data-status=<%= key%>> <%= key.humanize %></div>
+        <% current = current && !(last_status == key) %>
       <% end %>
     </div>
   </div>

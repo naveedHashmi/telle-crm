@@ -10,9 +10,7 @@ class ClientsController < BaseController
 
   # GET /clients/1 or /clients/1.json
   def show
-    client_deals = @client.deals.custom_filter(filter_params).includes(:client)
-    @deals = client_deals.group_by(&:status)
-    @deals_group = client_deals.group(:status).count
+    @deal = @client.deal
   end
 
   # GET /clients/new
