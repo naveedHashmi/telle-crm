@@ -84,7 +84,7 @@
         </li>
         <!-- End Dashboard Nav -->
         <li class="nav-item">
-          <%= link_to deals_path, class: "nav-link" do %>
+          <%= link_to users_path, class: "nav-link" do %>
             <i class="bi bi-grid"></i>
             <span>Users</span>
           <% end %>
@@ -100,6 +100,12 @@
           <%= link_to analytics_path, class: "nav-link" do %>
             <i class="bi bi-grid"></i>
             <span>Analytics</span>
+          <% end %>
+        </li>
+        <li class="nav-item">
+          <%= link_to invoice_queues_path, class: "nav-link" do %>
+            <i class="bi bi-grid"></i>
+            <span>Invoice Queues</span>
           <% end %>
         </li>
         <!-- End Dashboard Nav -->

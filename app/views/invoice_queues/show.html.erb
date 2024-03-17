@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @invoice_queue %>
+
+<div>
+  <%= link_to "Edit this invoice queue", edit_invoice_queue_path(@invoice_queue) %> |
+  <%= link_to "Back to invoice queues", invoice_queues_path %>
+
+  <%= button_to "Destroy this invoice queue", @invoice_queue, method: :delete %>
+</div>

@@ -12,6 +12,8 @@ class User < ApplicationRecord
   has_many :clients
   has_many :leads
   has_many :deals, through: :clients
+  has_many :invoice_queues
+  has_many :approved_invoices, class_name: 'InvoiceQueue', foreign_key: 'approved_by_id'
 
   validate :name, prepend: true
 end

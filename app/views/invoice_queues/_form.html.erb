@@ -1,0 +1,57 @@
+<%= form_with(model: invoice_queue) do |form| %>
+  <% if invoice_queue.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(invoice_queue.errors.count, "error") %> prohibited this invoice_queue from being saved:</h2>
+
+      <ul>
+        <% invoice_queue.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :full_name, style: "display: block" %>
+    <%= form.text_field :full_name %>
+  </div>
+
+  <div>
+    <%= form.label :email, style: "display: block" %>
+    <%= form.text_field :email %>
+  </div>
+
+  <div>
+    <%= form.label :full_address, style: "display: block" %>
+    <%= form.text_field :full_address %>
+  </div>
+
+  <div>
+    <%= form.label :phone_no, style: "display: block" %>
+    <%= form.text_field :phone_no %>
+  </div>
+
+  <div>
+    <%= form.label :invoice_amount, style: "display: block" %>
+    <%= form.text_field :invoice_amount %>
+  </div>
+
+  <div>
+    <%= form.label :claim_no, style: "display: block" %>
+    <%= form.number_field :claim_no %>
+  </div>
+
+  <div>
+    <%= form.label :user_id, style: "display: block" %>
+    <%= form.text_field :user_id %>
+  </div>
+
+  <div>
+    <%= form.label :approved_by_id, style: "display: block" %>
+    <%= form.text_field :approved_by_id %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

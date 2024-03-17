@@ -1,0 +1,26 @@
+<% if flash[:alert] %>
+  <p style="color: red"><%= flash[:alert] %></p>
+<% end %>
+<h1>Invoice queues</h1>
+<div id="invoice_queues">
+  <div>
+    <table class='table table-hover text-secondary'>
+      <thead >
+        <th class='text-secondary'>Full name</th>
+        <th class='text-secondary'>Email</th>
+        <th class='text-secondary'>Full address</th>
+        <th class='text-secondary'>Phone no</th>
+        <th class='text-secondary'>Invoice amount</th>
+        <th class='text-secondary'>Claim no</th>
+        <th class='text-secondary'>Author</th>
+        <th class='text-secondary'>Status</th>
+        <th class='text-secondary'>Approved?</th>
+      </thead>
+      <tbody>
+        <% @invoice_queues.each do |invoice_queue| %>
+          <%= render invoice_queue %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

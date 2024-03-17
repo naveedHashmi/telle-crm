@@ -4,6 +4,7 @@
     <td scope="col"><%= user.last_name %></td>
     <td scope="col"><%= user.phone_no %></td>
     <td scope="col"><%= user.email %></td>
+    <td scope="col"><%= user.role %></td>
     <th class="d-flex"><%= link_to "Edit", edit_user_path(user), class: 'btn btn-success' %> | <%= button_to "Delete", user, method: :delete, class: 'btn btn-danger' %></th>
   </tr>
 </div>

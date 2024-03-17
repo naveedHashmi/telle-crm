@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_03_13_185008) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_13_185009) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -60,6 +60,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_13_185008) do
     t.string "phone_no", default: "", null: false
     t.float "invoice_amount", default: 0.0, null: false
     t.string "claim_no", default: "", null: false
+    t.integer "status", default: 0, null: false
     t.bigint "user_id", null: false
     t.bigint "approved_by_id"
     t.datetime "created_at", null: false

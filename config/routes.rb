@@ -1,8 +1,13 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  resources :users, only: %i[index edit update]
-
+  resources :users, only: %i[index new create edit update]
+  resources :invoice_queues do
+    member do
+      patch :approve
+    end
+  end
+  resources :deals
   devise_for :users
 
   resources :labels, :notes

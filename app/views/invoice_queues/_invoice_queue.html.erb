@@ -1,0 +1,21 @@
+<tr>
+  <td class='text-secondary'><%= invoice_queue.full_name %></td>
+  <td class='text-secondary'><%= invoice_queue.email %></td>
+  <td class='text-secondary'><%= invoice_queue.full_address %></td>
+  <td class='text-secondary'><%= invoice_queue.phone_no %></td>
+  <td class='text-secondary'><%= invoice_queue.invoice_amount %></td>
+  <td class='text-secondary'><%= invoice_queue.claim_no %></td>
+  <td class='text-secondary'>
+    <%= invoice_queue.user&.name || '-' %>
+  </td>
+  <td class='text-secondary'><%= invoice_queue.status %></td>
+  <td class='text-secondary'>
+    <% if invoice_queue.approved_by %>
+      <button type="button" class="btn bg-transparent" data-toggle="tooltip" data-placement="top" title="Approved by <%= invoice_queue.approved_by&.name || '-' %>">
+        <span class='text-success'>Approved</span>
+      </button>
+    <% else %>
+      <%= button_to "Approve", approve_invoice_queue_path(invoice_queue), method: :patch, class: 'btn bg-success text-white', data: { turbo: false, confirm: "Are you sure?" } %>
+    <% end %>
+  </td>
+</tr>

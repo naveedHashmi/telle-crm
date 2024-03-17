@@ -78,26 +78,74 @@
           </div>
         </div>
         <div class="card mt-5">
-          <div class="card-body">
+          <div class="card-body ">
             <!-- Default List group -->
             <ul class="list-group">
-              <a href="#">
+              <a href="#" class="text-dark">
                 <li class="list-group-item">Documents</li>
               </a>
-              <a href="#">
+              <a href="#" class="text-dark">
                 <li class="list-group-item">Call Recordings</li>
               </a>
-              <a href="#">
+              <a href="#" class="text-dark">
                 <li class="list-group-item">Secured Dropbox</li>
               </a>
-              <a href="#">
-                <li class="list-group-item">Invoice</li>
-              </a>
-              <a href="#">
+              <li class="list-group-item">
+                <button type="button" class="btn btn-link text-dark p-0" data-bs-toggle="modal" data-bs-target="#createInvoiceModal">
+                  Invoice
+                </button>
+              </li>
+              <a href="#" class="text-dark">
                 <li class="list-group-item">Family Tree</li>
               </a>
             </ul>
             <!-- End Default List group -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="createInvoiceModal" tabindex="-1" aria-labelledby="createInvoiceModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="createInvoiceModalLabel">Create Invoice</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <%= form_with(model: InvoiceQueue.new, data: {controller: 'invoice-queues', action: 'turbo:submit-end->invoice-queues#toggleModel'}) do |form| %>
+              <div class="mb-3">
+                <%= form.hidden_field :user_id, value: current_user.id, required: true %>
+              </div>
+              <div class="mb-3">
+                <%= form.label :full_name, class: "form-label" %>
+                <%= form.text_field :full_name, class: "form-control", required: true %>
+              </div>
+              <div class="mb-3">
+                <%= form.label :email, class: "form-label" %>
+                <%= form.email_field :email, class: "form-control", required: true %>
+              </div>
+              <div class="mb-3">
+                <%= form.label :full_address, class: "form-label" %>
+                <%= form.text_field :full_address, class: "form-control", required: true %>
+              </div>
+              <div class="mb-3">
+                <%= form.label :phone_no, class: "form-label" %>
+                <%= form.text_field :phone_no, class: "form-control", required: true, title: "Please enter a 10-digit phone number" %>
+              </div>
+              <div class="mb-3">
+                <%= form.label :invoice_amount, class: "form-label" %>
+                <%= form.number_field :invoice_amount, class: "form-control", required: true, min: "0" %>
+              </div>
+              <div class="mb-3">
+                <%= form.label :claim_no, class: "form-label" %>
+                <%= form.text_field :claim_no, class: "form-control", required: true %>
+              </div>
+              <!-- You can add more fields here if needed -->
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <%= form.submit "Create Invoice", class: "btn btn-primary" %>
+              </div>
+            <% end %>
           </div>
         </div>
       </div>
