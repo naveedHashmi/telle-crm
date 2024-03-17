@@ -5,7 +5,7 @@ class GmailController < ApplicationController
                                           client_secret: ENV.fetch('GOOGLE_API_CLIENT_SECRET'),
                                           authorization_uri: 'https://accounts.google.com/o/oauth2/auth',
                                           scope: Google::Apis::GmailV1::AUTH_GMAIL_READONLY,
-                                          redirect_uri: 'http://localhost:3000/auth/success',
+                                          redirect_uri: "#{ENV.fetch('BASE_URL')}/auth/success",
                                           access_type: 'offline'
                                         })
 
@@ -17,7 +17,7 @@ class GmailController < ApplicationController
                                           client_id: ENV.fetch('GOOGLE_API_CLIENT_ID'),
                                           client_secret: ENV.fetch('GOOGLE_API_CLIENT_SECRET'),
                                           token_credential_uri: 'https://accounts.google.com/o/oauth2/token',
-                                          redirect_uri: 'http://localhost:3000/auth/success',
+                                          redirect_uri: "#{ENV.fetch('BASE_URL')}/auth/success",
                                           code: params[:code]
                                         })
 
