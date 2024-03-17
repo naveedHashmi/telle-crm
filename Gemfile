@@ -54,8 +54,8 @@ gem 'sassc-rails'
 
 gem 'rails_charts' # charts
 
+gem 'google-api-client', '~> 0.9', require: 'google/apis/gmail_v1'
 gem 'paper_trail'
-
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 

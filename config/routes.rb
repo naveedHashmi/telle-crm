@@ -20,6 +20,9 @@ Rails.application.routes.draw do
     collection do
       post :change_assignee
     end
+    member do
+      get :emails
+    end
   end
 
   resources :activities do
@@ -40,5 +43,7 @@ Rails.application.routes.draw do
 
   get '/analytics', to: 'analytics#analytics'
   delete '/sessions/sign_out', to: 'devise/sessions#destroy'
+  get 'authenticate', to: 'gmail#authenticate'
+  get 'auth/success', to: 'gmail#success'
   root 'clients#index'
 end

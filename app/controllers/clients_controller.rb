@@ -10,7 +10,11 @@ class ClientsController < BaseController
 
   # GET /clients/1 or /clients/1.json
   def show
+    session[:client_id] = @client.id
     @deal = @client.deal
+    return unless params[:partial] == 'client_emails'
+
+    @client_emails = GmailService.new(current_user, @client).get_messages
   end
 
   # GET /clients/new

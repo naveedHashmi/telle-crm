@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_03_13_185009) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_17_081119) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -135,6 +135,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_13_185009) do
     t.string "last_name", default: "", null: false
     t.string "phone_no", default: "", null: false
     t.integer "role", default: 0, null: false
+    t.jsonb "gmail_credentials", default: {}
     t.index ["email"], name: "index_users_on_email", unique: true, where: "((email IS NOT NULL) AND ((email)::text <> ''::text))"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

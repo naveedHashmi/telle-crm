@@ -1,0 +1,19 @@
+<div class='d-flex justify-content-between text-secondary'>
+  <h5>Client Emails</h5>
+  <%= link_to 'Authenticate', authenticate_path, data: { turbo: false }, class: 'btn btn-success' %>
+</div>
+<div id="client-emails">
+  <div>
+    <table class='table table-hover text-secondary'>
+      <thead >
+        <th class='text-secondary'>Subject</th>
+        <th class='text-secondary'>Date</th>
+      </thead>
+      <tbody>
+        <% @client_emails.each do |email| %>
+          <%= render 'email', email: email %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
