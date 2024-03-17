@@ -6,10 +6,11 @@ class GmailController < ApplicationController
                                           authorization_uri: 'https://accounts.google.com/o/oauth2/auth',
                                           scope: Google::Apis::GmailV1::AUTH_GMAIL_READONLY,
                                           redirect_uri: "#{ENV.fetch('BASE_URL')}/auth/success",
-                                          access_type: 'offline'
+                                          access_type: 'offline',
+                                          prompt: 'consent'
                                         })
 
-    redirect_to client.authorization_uri.to_s, allow_other_host: true
+    redirect_to "#{client.authorization_uri}&prompt=consent", allow_other_host: true
   end
 
   def success
