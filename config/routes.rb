@@ -20,9 +20,12 @@ Rails.application.routes.draw do
     collection do
       post :change_assignee
     end
+
     member do
       get :emails
     end
+
+    resources :emails, only: %i[show]
   end
 
   resources :activities do

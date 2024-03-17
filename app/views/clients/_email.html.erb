@@ -1,4 +1,26 @@
 <tr>
-  <td class='text-secondary'><%= email['subject'] %></td>
+  <td class='text-secondary text-left p-0'>
+    <p class="bg-trasparent text-blue justify-content-left p-0" data-bs-toggle="modal" data-bs-target="#message-link-<%=email['id']%>">
+      <%= email['subject']&.strip() %>
+    </p>
+    <div class="modal modal-lg fade" id="message-link-<%=email['id']%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel"><%= email['subject'] %></h5>
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <%= email['data'].force_encoding('UTF-8').html_safe %>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </td>
   <td class='text-secondary'><%= email['date'] %></td>
 </tr>

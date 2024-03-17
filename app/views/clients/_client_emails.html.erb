@@ -2,18 +2,9 @@
   <h5>Client Emails</h5>
   <%= link_to 'Authenticate', authenticate_path, data: { turbo: false }, class: 'btn btn-success' %>
 </div>
-<div id="client-emails">
-  <div>
-    <table class='table table-hover text-secondary'>
-      <thead >
-        <th class='text-secondary'>Subject</th>
-        <th class='text-secondary'>Date</th>
-      </thead>
-      <tbody>
-        <% @client_emails.each do |email| %>
-          <%= render 'email', email: email %>
-        <% end %>
-      </tbody>
-    </table>
+<%= turbo_frame_tag 'client-emails', src: emails_client_path(@client.id) do %>
+  <div class="d-flex justify-content-center">
+    <div class="spinner-border" role="status">
+    </div>
   </div>
-</div>
+<% end %>

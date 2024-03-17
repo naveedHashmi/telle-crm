@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ClientsController < BaseController
-  before_action :set_client, only: %i[show edit update destroy]
+  before_action :set_client, only: %i[show edit update destroy emails]
 
   # GET /clients or /clients.json
   def index
@@ -13,7 +13,9 @@ class ClientsController < BaseController
     session[:client_id] = @client.id
     @deal = @client.deal
     return unless params[:partial] == 'client_emails'
+  end
 
+  def emails
     @client_emails = GmailService.new(current_user, @client).get_messages
   end
 

@@ -1,0 +1,13 @@
+<%= turbo_frame_tag 'client-emails' do %>
+  <table class='table table-hover text-secondary'>
+    <thead >
+      <th class='text-secondary'>Subject</th>
+      <th class='text-secondary'>Date</th>
+    </thead>
+    <tbody>
+      <% @client_emails.each do |email| %>
+        <%= render 'email', email: email %>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
