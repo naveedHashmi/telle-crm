@@ -86,7 +86,7 @@
       <% last_status = object.key?("status") ? Deal.statuses.invert[object["status"][1]] : 'agreement_start' %>
       <% current = @client.deal.present? %>
       <% deal_statuses.each do |value, key| %>
-        <div class="step <%=  current ? 'current' : '' %>" data-action='click->deals#updateStatus' data-id=<%=@deal.id%> data-status=<%= key%>> <%= key.humanize %></div>
+        <div class="step <%=  current ? 'current' : '' %>" data-action='click->deals#updateStatus' data-id=<%=@client.deal&.id%> data-status=<%= key%>> <%= key.humanize %></div>
         <% current = current && !(last_status == key) %>
       <% end %>
     </div>

@@ -1,10 +1,18 @@
 <div class='d-flex justify-content-between text-secondary'>
   <h5>Client Emails</h5>
-  <%= link_to 'Authenticate', authenticate_path, data: { turbo: false }, class: 'btn btn-success' %>
+  <% unless current_user.gmail_credentials['access_token'].present? %>
+    <%= link_to 'Login to Gmail', authenticate_path, data: { turbo: false }, class: 'btn btn-success' %>
+  <% end %>
 </div>
-<%= turbo_frame_tag 'client-emails', src: emails_client_path(@client.id) do %>
-  <div class="d-flex justify-content-center">
-    <div class="spinner-border" role="status">
-    </div>
-  </div>
-<% end %>
+<div>
+  <% unless current_user.gmail_credentials['access_token'].present? %>
+    <p> You need authorize the email by clicking 'Login to Gmail'.</p>
+  <% else %>
+    <%= turbo_frame_tag 'client-emails', src: emails_client_path(@client.id) do %>
+      <div class="d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+</div>
