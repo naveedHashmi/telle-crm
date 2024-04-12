@@ -12,7 +12,7 @@ class ClientsController < BaseController
   def show
     session[:client_id] = @client.id
     @deal = @client.deal
-    return unless params[:partial] == 'client_emails'
+    nil unless params[:partial] == 'client_emails'
   end
 
   def emails
@@ -78,7 +78,8 @@ class ClientsController < BaseController
 
   # Only allow a list of trusted parameters through.
   def client_params
-    params.require(:client).permit(:phone, :amount_owed, :lawsuit_no, :address, :claim_no, :name, :email, :user_id)
+    params.require(:client).permit(:phone, :amount_owed, :lawsuit_no, :address, :claim_no, :name, :email, :user_id,
+                                   :documents)
   end
 
   def filter_params

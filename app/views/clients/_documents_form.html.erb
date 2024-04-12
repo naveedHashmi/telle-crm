@@ -1,0 +1,13 @@
+<%= turbo_frame_tag 'documents-form' do %>
+  <%= form_with(model: @client, url: client_path(@client), method: 'post') do |form| %>
+    <%= form.hidden_field :noteable_type, value: noteable_type %>
+    <%= form.hidden_field :noteable_id, value: noteable_id %>
+    <div class="mb-3">
+      <label for="inputPassword" class="col-sm-2 col-form-label">Note: </label>
+      <%= form.file_field :documents, class: "form-control", multiple: true %>
+    </div>
+    <div class="mb-3">
+      <%= form.submit "Save", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+<% end %>

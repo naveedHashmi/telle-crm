@@ -1,0 +1,3 @@
+<% @client.documents.each do |document|%>
+  <%= image_tag url_for(document.file), height:'200', width: '200'%>
+<% end %>

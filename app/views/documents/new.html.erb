@@ -1,0 +1,15 @@
+<%= turbo_frame_tag 'documents-form' do %>
+  <%= form_with(model: @client.documents.new, url: client_documents_path(@client), method: 'post') do |form| %>
+    <div class="mb-3">
+      <label for="inputPassword" class="col-sm-2 col-form-label">Upload documents: </label>
+      <%= form.file_field :file, class: "form-control" %>
+    </div>
+    <div class="mb-3">
+      <label for="name" class="col-sm-2 col-form-label">name: </label>
+      <%= form.text_field :name, class: "form-control" %>
+    </div>
+    <div class="mb-3">
+      <%= form.submit "Save", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+<% end %>

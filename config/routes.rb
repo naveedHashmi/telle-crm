@@ -26,6 +26,7 @@ Rails.application.routes.draw do
     end
 
     resources :emails, only: %i[show]
+    resources :documents
   end
 
   resources :activities do

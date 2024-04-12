@@ -7,6 +7,7 @@ class Client < ApplicationRecord
 
   has_many :activities, as: :assignee, dependent: :destroy
   has_many :notes, as: :noteable, dependent: :destroy
+  has_many :documents, dependent: :destroy
   has_one :deal
 
   before_destroy :delete_associated_user
