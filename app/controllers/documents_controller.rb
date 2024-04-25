@@ -8,13 +8,7 @@ class DocumentsController < BaseController
   end
 
   def create
-    byebug
-    # documents_to_upload = params[:attachment][:documents]
-
-    # documents_to_upload.reject { |c| c.blank? }.each do |document|
-    #   byebug
     @client.documents.create(document_params)
-    # end
   end
 
   private

@@ -1,3 +1,12 @@
-<% @client.documents.each do |document|%>
-  <%= image_tag url_for(document.file), height:'200', width: '200'%>
-<% end %>
+<ol>
+  <% @client.documents.each do |document|%>
+    <div class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#document-preview-<%= document.id %>" aria-expanded="false" aria-controls="collapseTwo">
+      <li><%= link_to document.name, url_for(document.file), target: '_blank', data: { turbo_stream: true} %></li>
+    </div>
+    <div id="document-preview-<%= document.id %>" class="accordion-collapse collapse">
+      <div class="accordion-body h-100">
+        <iframe src="<%= url_for(document.file) %>", height='800', width='700' ></iframe>
+      </div>
+    </div>
+  <% end %>
+</ol>
