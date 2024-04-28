@@ -28,7 +28,9 @@ Rails.application.routes.draw do
     resources :emails, only: %i[show]
     resources :documents do
       member do
-        get :update_envelope_id
+        get :update_template_id
+        get :configure
+        get :sign
       end
     end
   end

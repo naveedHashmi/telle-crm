@@ -46,7 +46,7 @@ class DocusignService
     DocuSign_eSign::EnvelopeTemplate.new(
       'documents' => [document],
       'name' => @document.name,
-      'emailSubject' => 'Please sign this document',
+      'emailSubject' => @document.name,
       'envelopeTemplateDefinition' => envelope_template_definition,
       'recipients' => DocuSign_eSign::Recipients.new(
         'signers' => [signer], 'carbonCopies' => []
@@ -56,15 +56,63 @@ class DocusignService
   end
 
   def create_template
-    templates_api = create_template_api({ account_id: @app_account_id, base_path: @base_uri,
-                                          access_token: @current_user.docusign_credentials['access_token'] })
-
     template_req_object = make_template_req
     result = templates_api.create_template(@app_account_id, template_req_object)
 
-    view_request = DocuSign_eSign::ReturnUrlRequest.new({ returnUrl: "http://localhost:3000//clients/#{@document.client_id}/documents/#{@document.id}/update_envelope_id" })
-    edit_view = templates_api.create_edit_view(@app_account_id, result.template_id, view_request)
+    @document.update(docusign_template_id: result.template_id)
+
+    configure_url
+  end
+
+  def templates_api
+    @templates_api ||= create_template_api({ account_id: @app_account_id, base_path: @base_uri,
+                                             access_token: @current_user.docusign_credentials['access_token'] })
+  end
+
+  def configure_url
+    template_id = @document.docusign_template_id
+    view_request = DocuSign_eSign::ReturnUrlRequest.new({ returnUrl: "http://localhost:3000//clients/#{@document.client_id}/documents/#{@document.id}/update_template_id?docusign_template_id=#{template_id}" })
+    edit_view = templates_api.create_edit_view(@app_account_id, template_id, view_request)
 
     edit_view.url
+  end
+
+  def signature_request
+    template_id = @document.docusign_template_id
+    client = Client.find(@document.client_id)
+
+    return unless template_id
+
+    begin
+      envelope_args = {
+        signer_email: client.email,
+        signer_name: client.name,
+        # cc_email: params['ccEmail'],
+        # cc_name: params['ccName'],
+        template_id:
+      }
+
+      args = {
+        account_id: @app_account_id,
+        base_path: @base_uri,
+        access_token: @current_user.docusign_credentials['access_token'],
+        envelope_args:
+      }
+
+      results = UseTemplateService.new(args).worker
+      envelope_id = results[:envelope_id]
+
+      # Create the sender view
+      view_request = DocuSign_eSign::ReturnUrlRequest.new({ returnUrl: 'http://localhost:3000/docusign/success' })
+      envelope_api = create_envelope_api(args)
+      results = envelope_api.create_sender_view args[:account_id], envelope_id, view_request
+      # Switch to the Recipients/Documents view if requested by the user in the form
+      url = results.url
+      url = url.sub! 'send=1', 'send=0' if args[:starting_view] == 'recipient'
+
+      { 'envelope_id' => envelope_id, 'redirect_url' => url }
+    rescue DocuSign_eSign::ApiError => e
+      puts e
+    end
   end
 end

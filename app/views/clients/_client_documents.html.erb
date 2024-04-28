@@ -1,4 +1,6 @@
-<%= turbo_frame_tag 'docusign-auth', src: docusign_authenticate_path do %>
-<% end %>
+<div class='d-flex align-items-center justify-content-end'>
+  <%= turbo_frame_tag 'docusign-auth', src: docusign_authenticate_path do %>
+  <% end %>
+</div>
 <%= turbo_frame_tag 'documents-list', src: client_documents_path(@client) do %>
 <% end %>

@@ -87,7 +87,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_28_102002) do
     t.bigint "client_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "docusign_envelope_id"
+    t.string "docusign_template_id"
     t.index ["client_id"], name: "index_documents_on_client_id"
   end
 
