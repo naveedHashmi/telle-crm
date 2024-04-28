@@ -1,2 +1,4 @@
+<%= turbo_frame_tag 'docusign-auth', src: docusign_authenticate_path do %>
+<% end %>
 <%= turbo_frame_tag 'documents-list', src: client_documents_path(@client) do %>
 <% end %>

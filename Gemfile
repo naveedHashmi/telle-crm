@@ -59,8 +59,8 @@ gem 'paper_trail'
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
+gem 'aws-sdk-s3', require: false
 gem 'simple_calendar', '~> 2.4'
-gem "aws-sdk-s3", require: false
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -94,3 +94,5 @@ group :test do
 end
 
 gem 'devise', '~> 4.9'
+gem 'docusign_esign', '~> 3.22.0'
+gem 'oauth2'

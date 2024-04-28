@@ -1,5 +1,5 @@
 <%= turbo_frame_tag 'documents-form' do %>
-  <%= form_with(model: @client.documents.new, url: client_documents_path(@client), method: 'post') do |form| %>
+  <%= form_with(model: @client.documents.new, url: client_documents_path(@client), method: 'post', data: { turbo: false}) do |form| %>
     <div class="mb-3">
       <label for="inputPassword" class="col-sm-2 col-form-label">Upload documents: </label>
       <%= form.file_field :file, accept:"application/pdf", class: "form-control" %>

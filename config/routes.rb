@@ -26,7 +26,11 @@ Rails.application.routes.draw do
     end
 
     resources :emails, only: %i[show]
-    resources :documents
+    resources :documents do
+      member do
+        get :update_envelope_id
+      end
+    end
   end
 
   resources :activities do
@@ -44,6 +48,11 @@ Rails.application.routes.draw do
       post :change_assignee
     end
   end
+
+  get 'docusign/success', to: 'docusign#success'
+  get 'docusign/token', to: 'docusign#token'
+  get 'docusign/authenticate', to: 'docusign#authenticate'
+  get 'docusign/template', to: 'docusign#template'
 
   get '/analytics', to: 'analytics#analytics'
   delete '/sessions/sign_out', to: 'devise/sessions#destroy'
