@@ -8,6 +8,9 @@ class Client < ApplicationRecord
   has_many :activities, as: :assignee, dependent: :destroy
   has_many :notes, as: :noteable, dependent: :destroy
   has_one :deal
+  has_one :family_tree, as: :family_treeable, dependent: :destroy
+
+  validate :only_one_family_tree
 
   before_destroy :delete_associated_user
 
@@ -17,5 +20,11 @@ class Client < ApplicationRecord
 
   def delete_associated_user
     user&.destroy
+  end
+
+  def only_one_family_tree
+    return unless FamilyTree.where(family_treeable_type: 'Client', family_treeable_id: id).count > 1
+
+    errors.add(:base, 'can only have one family tree')
   end
 end

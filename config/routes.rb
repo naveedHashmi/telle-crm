@@ -26,6 +26,7 @@ Rails.application.routes.draw do
     end
 
     resources :emails, only: %i[show]
+    resources :family_trees, only: %i[new create edit update destroy]
   end
 
   resources :activities do

@@ -22,6 +22,9 @@
               <li class="nav-item">
                 <%= link_to  'Emails', client_path(@client.id, partial: 'client_emails'), class: "nav-link #{ params[:partial] == 'client_emails' ? 'active' : nil}" %>
               </li>
+              <li class="nav-item">
+                <%= link_to  'Family Tree', client_path(@client.id, partial: 'client_family_tree'), class: "nav-link #{ params[:partial] == 'client_family_tree' ? 'active' : nil}" %>
+              </li>
             </ul>
             <div class="tab-content pt-2">
               <%= render params[:partial] || 'client_notes' %>
