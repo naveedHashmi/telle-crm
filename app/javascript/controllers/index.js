@@ -27,3 +27,6 @@ application.register("leads", LeadsController)
 
 import TurboFrameHistoryController from "./turbo_frame_history_controller"
 application.register("history", TurboFrameHistoryController)
+
+import FamilyTreeController from "./family_tree_controller"
+application.register("family-tree", FamilyTreeController)

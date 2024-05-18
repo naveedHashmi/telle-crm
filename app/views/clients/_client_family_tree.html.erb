@@ -1,44 +1,48 @@
 <% if @client.family_tree.nil? %>
-  <div class="row">
-    <div class="col-md-12 text-center">
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createTreeModal">
-        Create Tree
-      </button>
-    </div>
-  </div>
-  <!-- Create Tree Modal -->
-  <div class="modal fade" id="createTreeModal" tabindex="-1" role="dialog" aria-labelledby="createTreeModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="createTreeModalLabel">Create Family Tree</h5>
-          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <%= form_for FamilyTree.new, url: client_family_trees_path(@client) do |f| %>
-          <div class="modal-body">
-            <%= f.fields_for :tree_node, TreeNode.new do |tf| %>
-              <div class="form-group">
-                <%= tf.label :person_name %>
-                <%= tf.text_field :person_name, class: "form-control" %>
-              </div>
-              <div class="form-group">
-                <%= tf.label :title %>
-                <%= tf.text_field :title, class: "form-control" %>
-              </div>
-              <div class="form-group">
-                <%= tf.label :status %>
-                <%= tf.select :status, { diseased: 0, alive: 1 }, { prompt: "Select Status" }, class: "form-control" %>
-              </div>
-            <% end %>
-          </div>
-          <div class="modal-footer">
-            <%= f.submit "Create", class: "btn btn-primary" %>
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          </div>
-        <% end %>
+  <%= turbo_frame_tag 'family-tree' do%>
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createTreeModal">
+          Create Tree
+        </button>
       </div>
     </div>
-  </div>
+    <!-- Create Tree Modal -->
+    <div class="modal fade" id="createTreeModal" tabindex="-1" role="dialog" aria-labelledby="createTreeModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="createTreeModalLabel">Create Family Tree</h5>
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <%= form_for FamilyTree.new, url: client_family_trees_path(@client) do |f| %>
+            <div class="modal-body">
+              <%= f.fields_for :tree_node, TreeNode.new do |tf| %>
+                <div class="form-group">
+                  <%= tf.label :person_name %>
+                  <%= tf.text_field :person_name, class: "form-control" %>
+                </div>
+                <div class="form-group">
+                  <%= tf.label :title %>
+                  <%= tf.text_field :title, class: "form-control" %>
+                </div>
+                <div class="form-group">
+                  <%= tf.label :status %>
+                  <%= tf.select :status, %w[diseased alive], { prompt: "Select Status" }, class: "form-control" %>
+                </div>
+              <% end %>
+            </div>
+            <div class="modal-footer">
+              <%= f.submit "Create", class: "btn btn-primary", 'data-bs-dismiss':"modal" %>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% else %>
+  <%= render 'family_tree'%>
 <% end %>
